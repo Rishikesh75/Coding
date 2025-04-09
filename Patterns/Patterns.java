@@ -4,7 +4,7 @@ import java.util.Scanner;
 public class Patterns
 {
     
-    static void  pattern_1(int n)
+    public static void  pattern_1(int n)
     {
         for(int i=1;i<=n;i++)
         {
@@ -15,7 +15,7 @@ public class Patterns
                 System.out.print("\n");
         }
     }
-    static void pattern_2(int n)
+    public static void pattern_2(int n)
     {
         for(int i=0;i<n;i++)
         {
@@ -26,12 +26,58 @@ public class Patterns
             System.out.print("\n");
         }
     }
+    public static void pattern_3(int n)
+    {
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=1;j<=i;j++)
+            {
+                System.out.printf("%d \t",j);
+            }
+            System.out.print("\n");
+        }
+    }
+    public static void pattern_4(int n)
+    {
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=1;j<=i;j++)
+            {
+                System.out.printf("%d \t",i);
+            }
+            System.out.print("\n");
+        }
+    }
+    public static void patter_5(int n)
+    {
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=n-i+1;j>=1;j--)
+            {
+                System.out.print("*\t");
+            }
+            System.out.print("\n");
+        }
+    }
+    public static void pattern_6(int n)
+    {
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=n-i+1;j>=1;j--)
+            {
+                System.out.printf("%d\t",n-j+1);
+            }
+            System.out.print("\n");
+        }
+    } 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the No of Rows");
         int n = sc.nextInt();
         //pattern_1(n);
-        pattern_2(n);
+        //pattern_2(n);
+        //pattern_3(n);
+        pattern_6(n);
         sc.close();
     }
 }
