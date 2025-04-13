@@ -163,20 +163,69 @@ void MoveZeroes(vector<int>&arr,int n)
         }
     }
 }
-void LinearSearch()
+int LinearSearch(vector<int>arr,int n,int num)
 {
-
+    for(int i=0;i<n;i++)
+    {
+        if(arr[i] == num)
+        {
+            return i;
+        }
+    }
+    return -1;
 }
-void UnionArray()
+void UnionArray(vector<int>arr_1,vector<int>arr_2,int n_1,int n_2)
 {
-    
+    Array ArrObj;
+    int i_1 = 0;
+    int i_2 = 0;
+    while(1)
+    {
+        if(i_1 == n_1)
+        {
+            break;
+        }
+        if(arr_1[i_1]>arr_2[i_2])
+        {
+            ArrObj.arrSwap(arr_1,arr_2,i_1,i_2);
+            ArrObj.arrCheck(arr_2,n_2);
+        }
+        i_1 = i_1 + 1;
+    }
+    ArrObj.displayArr(n_1-1,arr_1);
+    ArrObj.displayArr(n_2-1,arr_2);
+}
+void missingNumber(vector<int>arr,int n)
+{
+    //Optimal Approch
+    int temp;
+    for(int i=0;i<=n;i++)
+    {
+        if(i == 0)
+        {
+            temp = arr[i] ^ i+1;
+        }
+        else if(i == n)
+        {
+            temp = temp ^ i+1;
+        }
+        else
+        {
+            temp = temp ^ arr[i] ^ i+1;
+        }
+
+    }
+    cout<<"Missing Number:"<<temp<<endl;
 }
 int main()
 {
-    int n;
-    cin>>n;
+    int n_1;
+    cin>>n_1;
+    // int n_2;
+    // cin>>n_2;
     Array arrObject;
-    vector<int>arr = arrObject.createArray(n);
+    vector<int>arr_1 = arrObject.createArray(n_1);
+    // vector<int>arr_2 = arrObject.createArray(n_2);
     // pair<int,int>temp = largestElementArray(n,arr);
     // cout<<"Largest Element is:"<<temp.second<<" Index:"<<temp.first<<endl;
     // pair<int,int>temp_sec = secondLargestElement(n,arr);
@@ -184,7 +233,9 @@ int main()
     // cout<<"Array is Sorted:"<<check_array_sorted(n,arr)<<endl;
     // removeDuplicateSortedArray(n,arr);
     // leftRotateArray(n,arr,2);
-    MoveZeroes(arr,n);
-    arrObject.displayArr(n-1,arr);
+    //MoveZeroes(arr,n);
+    //arrObject.displayArr(n-1,arr);
+    //UnionArray(arr_1,arr_2,n_1,n_2);
+    missingNumber(arr_1,n_1);
     return(0);
 }

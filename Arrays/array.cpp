@@ -29,3 +29,22 @@ void Array::arrSwap(vector<int>&arr,int startindex,int lastindex)
     arr[startindex] = arr[lastindex];
     arr[lastindex] = temp;
 }
+void Array::arrSwap(vector<int> &arr_1, vector<int> &arr_2, int i_1, int i_2)
+{
+    int temp = arr_1[i_1];
+    arr_1[i_1] = arr_2[i_2];
+    arr_2[i_2] =temp;
+}
+void Array::arrCheck(vector<int>&arr,int n)
+{
+    Array arrObj;
+    int index = 0;
+    for(int i=1;i<n;i++)
+    {
+        if(arr[index]>arr[i])
+        {
+            arrObj.arrSwap(arr,index,i);
+            index = i;
+        }
+    }
+}
