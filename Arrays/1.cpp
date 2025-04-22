@@ -1,6 +1,9 @@
 #include<iostream>
 #include<vector>
+#include<map>
+#include<algorithm>
 #include "array.h"
+#include "Math.h"
 using namespace std;
 pair<int,int>largestElementArray(int n,vector<int>arr)
 {
@@ -126,6 +129,7 @@ void leftRotateArray(int n,vector<int>arr,int places)
     }
     arrayObj.displayArr(n-1,arr);
 }
+
 void MoveZeroes(vector<int>&arr,int n)
 {
     Array arrObj;
@@ -217,6 +221,320 @@ void missingNumber(vector<int>arr,int n)
     }
     cout<<"Missing Number:"<<temp<<endl;
 }
+
+int maxConsecutiveOnes(vector<int>arr,int n)
+{
+    
+    int count=0;
+    int maxCount =0;
+    for(int i=0;i<n;i++)
+    {
+        if(arr[i] == 1)
+        {
+            count = count  + 1;
+        }
+        else
+        {
+            maxCount = max(maxCount,count);
+            count = 0;
+        }
+    }
+    cout<<count<<maxCount<<endl;
+    maxCount = max(maxCount,count);
+    cout<<"Max Consecutive ones in the array"<<maxCount<<endl;
+}
+void NumberApperingOnce(int n,vector<int>arr)
+{
+    int temp = arr[0];
+    for(int i=1;i<n;i++)
+    {
+        temp = arr[i] ^ temp;
+    }
+    cout<<"Number Appering Once:"<<temp<<endl;
+}
+//STILL NEED TO BE CORRECTED
+int LongestSumKInArray_BruteForce(int n,vector<int>arr)
+{
+    int sum = 0;
+    int max_sum;
+    pair<int,int>temp;
+    bool exist = false;
+    int k;
+    cout<<"Enter the sum:\t";
+    cin>>k;
+    for(int i=0;i<n;i++)
+    {
+        for(int j = i;j<n;j++)
+        {
+            sum = sum  + arr[j];
+            if(sum == k)
+            {
+                exist = true;
+                if(temp.first == -1 && temp.second == -1)
+                {
+                    temp.first = i;
+                    temp.second = j;
+                }
+                else if(temp.second -  temp.first < j - i)
+                {
+                    temp.first = i;
+                    temp.second = j;
+                }
+                
+            }
+        }
+        sum = 0;
+    }
+    if(exist == true)
+    {
+        cout<<"start index:"<<temp.first<<"second index:"<<temp.second<<endl;
+    }
+    else
+    {
+        cout<<"Max sum in the sumb array is:"<<max_sum<<endl;
+        cout<<"start index:"<<-1<<"second index:"<<-1<<endl;
+    }
+    
+}
+int LongestSumKInArrayOptimizedApproch(int n,vector<int>arr)
+{
+    int k;
+    cout << "Enter the Sum: ";
+    cin >> k;
+    pair<int,int>temp;
+    temp.first = -1;
+    temp.second = -1;
+    int sum = 0;
+    map<int, int> IndexSum;
+    IndexSum.insert({0, -1});
+    for (int i = 0; i < n; i++) {
+        sum += arr[i];
+        IndexSum.insert({sum, i}); // correct syntax
+    }
+    sum = 0;
+    for (const auto& value : IndexSum) {
+        cout << "Sum: " << value.first << ", Index: " << value.second << endl;
+    }
+    for(int i=0;i<n;i++)
+    {
+        sum = sum + arr[i];
+        if(IndexSum.find(sum-k)!=IndexSum.end())
+        {
+            if(i - (IndexSum[sum-k] + 1)>temp.second - temp.first)
+            {
+                temp.first = IndexSum[sum-k] + 1;
+                temp.second = i;
+            }
+           
+        }
+    }
+    if(temp.first == -1 && temp.second == -1)
+    {
+        cout<<"Sum Not found in the array"<<endl;
+    }
+    else
+    {
+        cout<<"start Index:"<<temp.first<<"End Index:"<<temp.second<<endl;
+    }
+    
+}
+void TwoSumBruteForce(vector<int>arr,int n)
+{
+    int sum;
+    cin>>sum;
+    pair<int,int>temp;
+    for(int i=0;i<n;i++)
+    {
+        for(int j=i+1;j<n;j++)
+        {   
+            if(arr[i]+arr[j] == sum)
+            {
+                temp.first = i;
+                temp.second = j;
+            }
+        }
+    }
+    cout<<temp.first<<temp.second<<endl;
+}
+void TwoSumBetterApproch(vector<int>arr,int n)
+{
+    int sum;
+    cin>>sum;
+    map<int,int>HashMap;
+    pair<int,int>temp;
+    for(int i=0;i<n;i++)
+    {
+        HashMap.insert(arr[i],i+1);
+    }
+    for(int i=0;i<n;i++)
+    {   
+        if(HashMap[sum - arr[i]] != 0)
+        {
+            temp.first = i;
+            temp.second = HashMap[sum - arr[i]];
+        } 
+    }
+    cout<<temp.first<<temp.second<<endl;
+}
+void TwoSumOptimalAdpproch(vector<int>arr,int n)
+{
+    int sum;
+    cin>>sum;
+    sort(arr.begin(),arr.end());
+    int i=0;
+    int j = n-1;
+    pair<int,int>temp;
+    temp.first = -1;
+    temp.second = -1;
+    while(1)
+    {
+        if(i == j || j > i)
+        {
+            break;
+        }
+        if(arr[i]+arr[j] == sum)
+        {
+            temp.first = i;
+            temp.second = j;
+            break;
+        }
+        else if(arr[i]+arr[j]>sum)
+        {
+            j = j - 1;
+        }
+        else if(arr[i]+arr[j]<sum)
+        {
+            i = i + 1;
+        }
+    }
+    cout<<"Index are"<<temp.first<<temp.second<<endl;
+}
+void sort_arrays_012(vector<int>arr,int n)
+{
+    int count_0 = 0,count_1 = 0,count_2 = 0;
+    for(int i=0;i<n;i++)
+    {
+        if(arr[i] == 0)
+        {
+            count_0 = count_0 + 1;
+        }
+        else if(arr[i] == 1)
+        {
+            count_1 = count_1 + 1;
+        }
+        else
+        {
+            count_2 = count_2 + 1;
+        }
+    }
+    int i=0;
+    while(i!=n)
+    {
+        if(count_0 !=0)
+        {
+            arr[i] = 0;
+            continue;
+        }
+        else if(count_1!=0)
+        {
+            arr[i] = 1;
+            continue;
+        }
+        else
+        {
+            arr[i] = 2;
+            continue;
+        }
+        i = i +1;
+    }
+    Array arrObj;
+    arrObj.displayArr(n,arr);
+}
+void sort_arr_012(vector<int>arr,int n)
+{
+    sort(arr.begin(),arr.end());
+    Array arrObj;
+    arrObj.displayArr(n-1,arr);
+}
+
+void sortDutchNationalsAlgo(vector<int>arr,int n)
+{
+    Array arrObj;
+    int low = 0;//First Ocuurance of 1
+    int mid = 0;//Last occurance of 1 after
+    int high = n-1;//Frist Ocurrance of 2 before
+    while(mid<=high)
+    {
+        if(arr[low] == 0)
+        {
+            arrObj.arrSwap(arr,low,mid);
+            low = low + 1;
+            mid = mid +1 ;
+        }
+        else if(arr[mid] == 1)
+        {
+            mid = mid +1;
+        }
+        else if(arr[mid] == 2)
+        {
+            swap(arr,mid,high);
+            high = high - 1;
+        }
+    }
+    
+    arrObj.displayArr(n-1,arr);
+}
+void MajorityElement(vector<int>arr,int n )
+{
+    int count =0;
+    int num = arr[0];
+    count = count + 1;
+    for(int i=1;i<n;i++)
+    {
+        if(arr[i] == num && count!=0)
+        {
+            count = count  + 1;
+        }
+        else if(arr[i]!=num && count!=0)
+        {
+            count = count - 1;
+        }
+        else if(count == 0)
+        {
+            num = arr[i];
+            count = count + 1;
+        }
+    }
+    if(count>0)
+    {
+        cout<<"Element is:"<<num<<endl;
+    }
+    else
+    {
+        cout<<"Element Doesn't Exist"<<endl;
+    }
+}
+void MaxSum(vector<int>arr,int n)
+{
+    //Kandesn Algoritham(Updation to the Problem Find the Index as well Here)
+    int currentSum=0;
+    int maxSum=0;
+    int firstPostive = 0;
+    for(int i=0;i<n;i++)
+    {
+        if(arr[i]<0 && firstPostive == 0)
+        {
+            continue;
+        }
+        else if(arr[i]>0 && firstPostive == 0)
+        {
+            firstPostive = 1;
+            currentSum = currentSum + arr[i];
+            maxSum = max(currentSum,maxSum);
+        }
+    }
+    cout<<"Max Sum in the Array:"<<maxSum<<endl;
+}
 int main()
 {
     int n_1;
@@ -236,6 +554,9 @@ int main()
     //MoveZeroes(arr,n);
     //arrObject.displayArr(n-1,arr);
     //UnionArray(arr_1,arr_2,n_1,n_2);
-    missingNumber(arr_1,n_1);
+    // missingNumber(arr_1,n_1-1);
+    //maxConsecutiveOnes(arr_1,n_1);
+    //NumberApperingOnce(n_1,arr_1);
+     LongestSumKInArrayOptimizedApproch(n_1,arr_1);
     return(0);
 }
