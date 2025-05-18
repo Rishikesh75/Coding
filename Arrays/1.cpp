@@ -364,7 +364,7 @@ void TwoSumBetterApproch(vector<int>arr,int n)
     pair<int,int>temp;
     for(int i=0;i<n;i++)
     {
-        HashMap.insert(arr[i],i+1);
+        HashMap.insert({arr[i],i+1});
     }
     for(int i=0;i<n;i++)
     {   
@@ -535,6 +535,108 @@ void MaxSum(vector<int>arr,int n)
     }
     cout<<"Max Sum in the Array:"<<maxSum<<endl;
 }
+void BuySellStock(vector<int>arr,int n)
+{
+    int sell = n-1;
+    int buy = n-2;
+    int profit = 0;
+    int maxProfit = 0;
+    while(buy!=-1)
+    {
+        if(arr[buy]>arr[sell])
+        {
+            sell = buy;
+        }
+        else
+        {   
+            profit = arr[sell] - arr[buy];
+            maxProfit = max(profit,maxProfit);
+        }
+        buy = buy -1;
+    }
+    cout<<"Max Profit:"<<maxProfit<<endl;
+}
+void RearrangeArray(vector<int>arr,int n)
+{
+    vector<int>ans(n,0);
+    int even_index = 0;
+    int odd_index = 1;
+    for(int i=0;i<n;i++)
+    {   
+        if(arr[i]%2 == 0)
+        {
+            ans[even_index] = arr[i];
+            even_index = even_index + 2;
+        }
+        else
+        {
+            ans[odd_index] = arr[i];
+            odd_index = odd_index + 2;
+        }
+    }
+}
+void swap(vector<int>arr,int i,int j,int n)
+{
+    Array arrObj;
+    if(i == n-1)
+    {
+        arrObj.displayArr(n,arr);
+        return ;
+    }
+    else if(i!=-1)
+    {
+        int temp =arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    for(int j = i + 1;i<n;i++)
+    {
+        swap(arr,i+1,j,n);
+    }
+}
+void FindLeadersInArray(vector<int>arr,int n)
+{
+    Array arrObj;
+    vector<int>LeadersArray;
+    LeadersArray.push_back(arr[n-1]);
+    int max = arr[n-1];
+    for(int i=n-2;i>=0;i++)
+    {
+        if(arr[i]>max)
+        {
+            LeadersArray.push_back(arr[i]);
+            max = arr[i];
+        }
+    }
+    arrObj.displayArr(LeadersArray.size()-1,LeadersArray);
+}
+void FindLongestSequence(vector<int>arr,int n)
+{
+    sort(arr.begin(),arr.end());
+    int i=0;
+    int j = i + 1;
+    int max_len = 0;
+    int len = 1;
+    while(j!=n)
+    {
+        if(arr[i] == arr[j])
+        {
+            j = j + 1;
+        }
+        else if(arr[j] = arr[i]+1)
+        {
+            len = len +1;
+            max_len = max(max_len,len);
+        }
+        else 
+        {
+            len = 1;
+            arr[i] = arr[j];
+            j = j + 1;
+        }
+    }
+    cout<<"Max_len"<<max_len<<endl;
+}
 int main()
 {
     int n_1;
@@ -557,6 +659,7 @@ int main()
     // missingNumber(arr_1,n_1-1);
     //maxConsecutiveOnes(arr_1,n_1);
     //NumberApperingOnce(n_1,arr_1);
-     LongestSumKInArrayOptimizedApproch(n_1,arr_1);
+     //LongestSumKInArrayOptimizedApproch(n_1,arr_1);
+    BuySellStock(arr_1,n_1);
     return(0);
 }

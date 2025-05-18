@@ -10,4 +10,8 @@ public:
     void arrSwap(vector<int>&arr_1,vector<int>&arr_2,int n_1,int n_2);
     void arrCheck(vector<int>&arr, int n);
 };
-
+class TwoDArray
+{
+    public:
+    vector<vector<int>>createArray(int n,int m);
+};
