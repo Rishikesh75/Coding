@@ -9,11 +9,11 @@ struct node
 };
 struct node *create_node(int value)
 {
-    struct node = new node();
-    node->value = value;
-    node->left = nullptr;
-    node->right = nullptr;
-    return node;
+    struct node*temp = new node();
+    temp->value = value;
+    temp->left = nullptr;
+    temp->right = nullptr;
+    return temp;
 }
 pair<struct node*,struct node*> create_dq()
 {
@@ -23,7 +23,7 @@ pair<struct node*,struct node*> create_dq()
 }
 pair<struct node *,struct node *>insert_dequeue(pair<struct node *,struct node*>queue,int value)
 {
-    struct node *new_node = new node();
+    struct node *new_node = create_node(value);
     if(queue.first == nullptr && queue.second == nullptr)
     {   
         queue.first  = new_node;
@@ -37,7 +37,7 @@ pair<struct node *,struct node *>insert_dequeue(pair<struct node *,struct node*>
     }
     return make_pair(queue.first,queue.second);
 }
-pair<struct node *,struct node*>deletequeue(<struct node *,struct node *>queue)
+pair<struct node *,struct node*>delete_queue(pair<struct node *,struct node *>queue)
 {
     if(queue.first == nullptr && queue.second == nullptr)
     {
@@ -56,19 +56,32 @@ pair<struct node *,struct node*>deletequeue(<struct node *,struct node *>queue)
         queue.first = queue.first->right;
         free(temp);
     }
-    return queue
+    return queue;
 }
 void display_queue(pair<struct node *,struct node *>queue)
 {
+    if(queue.first == nullptr)
+    {
+        cout<<"Queue is empty\n";
+        return;
+    }
     while(queue.first!=nullptr)
     {
         cout<<queue.first->value<<"\t";
+        queue.first = queue.first->right;
     }
     cout<<"\n";
 }
 int main()
 {
-
-
+    pair<struct node*,struct node*>queue = create_dq();
+    int temp;
+    cout<<"Enter the Value"<<endl;
+    cin>>temp;
+    queue = insert_dequeue(queue,temp);
+    display_queue(queue);
+    display_queue(queue);
+    queue = delete_queue(queue);
+    display_queue(queue);
     return(0);
 }
