@@ -1,3 +1,5 @@
+
+// push() pop() top() empty() 
 #include<iostream>
 #include<stack>
 using namespace std;
