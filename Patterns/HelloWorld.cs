@@ -1,9 +1,12 @@
-using System;
-
-class HelloWorld
+using Systems;
+namespace Patterns
 {
-    static void Main(string[] args)
+    public class HelloWorld
     {
-        Console.WriteLine("Hello, World!");
+        public static void Main(string[] args)
+        {
+            Console.WriteLine("Hello, World!");
+        }
     }
 }
+
