@@ -2,91 +2,78 @@
 #include<vector>
 #include<list>
 #include<queue>
-#include<stack>
 using namespace std;
-vector<list<int>>CreateGraph(int vertices)
+vector<list<int>> CreateGraph(int n)
 {
-    vector<list<int>> Graph(vertices, list<int>(0));
+    vector<list<int>> arr(n);
     int temp;
-    for(int i=0;i<vertices;i++)
+    for(int i=0;i<n;i++)
     {
-        for(int j=0;j<vertices;j++)
+        for(int j=0;j<n;j++)
         {
-            cout<<"Enter 1 if there is edge from"<<i<<j<<":";
+            temp = 0;
+            cout<<"Enter 1 if there is Edge B/w"<<i<<j<<endl;
             cin>>temp;
             if(temp == 1)
             {
-                Graph[i].push_back(j);
+                arr[i].push_back(j);
             }
         }
     }
-    return Graph;
+    return arr;
 }
-void DisplayGraph(vector<list<int>>Graph)
+void display(vector<list<int>> arr,int n)
 {
-    for(int i=0;i<Graph.size();i++)
+    for(int i=0;i<n;i++)
     {
-        cout<<i<<":";
-        for(auto start = Graph[i].begin();start!=Graph[i].end();start++)
+        for(auto it = arr[i].begin();it!=arr[i].end();it++)
         {
-            cout<<*start<<"\t";
-        }
-        cout<<"\n";
+            cout<<*it<<"\t";
+        }  
+        cout<<endl;
     }
 }
-void bfs(vector<list<int>>Graph)
-{   
-    int startnode =0;
+int FindstartIndex(vector<list<int>>arr)
+{
+    for(int i=0;i<arr.size();i++)
+    {
+        if(arr[i].size()!=0)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+void BFS(vector<list<int>>arr,int n)
+{
+    vector<int>visited_arr(n,0);
     queue<int>q;
-    vector<int>Visistedarr(Graph.size(),0);
-    q.push(startnode);
-    Visistedarr[startnode] = 1;
+    int index = FindstartIndex(arr);
+    q.push(index);
+    visited_arr[index] = 1;
     while(!q.empty())
     {
-        int vertex = q.front();
+        int CurrentIndex =  q.front();
         q.pop();
-        cout<<vertex<<"\t";
-        for(auto start = Graph[vertex].begin();start!=Graph[vertex].end();start++)
+        cout<<CurrentIndex<<endl;
+        for(auto it = arr[CurrentIndex].begin();it!=arr[CurrentIndex].end();it++)
         {
-            if(Visistedarr[*start] == 0)
+            if(visited_arr[*it] == 0)
             {
-                q.push(*start);
-                Visistedarr[*start] = 1;
+                q.push(*it);
+                visited_arr[*it] = 1;
             }
         }
     }
-    cout<<"\n";
-}
-void dfs(vector<list<int>>Graph)
-{   
-    int startnode =0;
-    stack<int>q;
-    vector<int>Visistedarr(Graph.size(),0);
-    q.push(startnode);
-    Visistedarr[startnode] = 1;
-    while(!q.empty())
-    {
-        int vertex = q.top();
-        q.pop();
-        cout<<vertex<<"\t";
-        for(auto start = Graph[vertex].begin();start!=Graph[vertex].end();start++)
-        {
-            if(Visistedarr[*start] == 0)
-            {
-                q.push(*start);
-                Visistedarr[*start] = 1;
-            }
-        }
-    }
-    cout<<"\n";
 }
 int main()
 {
-    int vertices;
-    cin>>vertices;
-    vector<list<int>>Graph = CreateGraph(vertices);
-    DisplayGraph(Graph);
-    bfs(Graph);
-    dfs(Graph);
+
+    int n;
+    cout<<"Enter the no of Vertices:"<<endl;
+    cin>>n;
+    vector<list<int>>arr = CreateGraph(n);
+    //display(arr,n);
+    BFS(arr,n);
     return(0);
 }
