@@ -1,6 +1,7 @@
 //MergeSort Algoritham
 //Checking the Commit File
 #include<iostream>
+#include<vector>
 using namespace std;
 vector<int>arr;
 void createarr(int n)
@@ -11,21 +12,18 @@ void createarr(int n)
         cin>>arr[i];
     }
 }
-void MergeSort(vector<int>arr,int startindex,int endindex)
+void Copy(vector<int>&temp,vector<int>&arr,int startindex)
 {
-    if(startindex == endindex)
+    for(int i=0;i<temp.size();i++)
     {
-        return;
+        arr[startindex] = temp[i];
+        startindex++;
     }
-    int mid = start + (end - start)/2;
-    MergeSort(arr,startindex,mid);
-    MergeSort(arr,mid+1,endindex);
-    Merge(arr,startindex,mid,endindex);
 }
-void Merge(vector<int>arr,int startindex,int midindex,int endindex)
+void Merge(int startindex,int midindex,int endindex)
 {
     int i_1 = startindex;
-    int i_2 = endindex;
+    int i_2 = midindex+1;
     int size = endindex - startindex + 1;
     vector<int>temp;
     while(i_1!=midindex+1 && i_2 !=endindex+1)
@@ -59,14 +57,20 @@ void Merge(vector<int>arr,int startindex,int midindex,int endindex)
     }
     Copy(temp,arr,startindex);
 }
-void Copy(vector<int>&temp,vector<int>&arr,int startindex)
+
+void MergeSort(int startindex,int endindex)
 {
-    for(int i=0;i<temp.size();i++)
+    if(startindex == endindex)
     {
-        arr[startindex] = temp[i];
-        startindex++;
+        return;
     }
+    int mid = startindex + (endindex - startindex)/2;
+    MergeSort(startindex,mid);
+    MergeSort(mid+1,endindex);
+    Merge(startindex,mid,endindex);
 }
+
+
 void display()
 {
     cout<<"arr:";
@@ -78,7 +82,11 @@ void display()
 }
 int main()
 {
-
-
+    int n;
+    cout<<"Enter the Size of the Array:";
+    cin>>n;
+    createarr(n);
+    MergeSort(0,n-1);
+    display();
     return 0;
 }
