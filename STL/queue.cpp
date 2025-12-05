@@ -1,16 +1,32 @@
+/*
+---Queue---
+q.push()
+q.pop()
+q.front()
+q.size()
+q.empty()
+*/
 #include<iostream>
+#include<queue>
 using namespace std;
+void Display(queue<int>queue)
+{
+    cout<<"Display:"<<"\t";
+    while(!queue.empty())
+    {
+        cout<<q.front()<<"\t";
+    }
+    return;
+}
 int main()
 {
-    queue<int> q;
+    queue<int>q;
     q.push(1);
-    q.push(2);
-    q.push(3);
-    cout << "Front element: " << q.front() << endl; // Access the front element
-    cout << "Back element: " << q.back() << endl;   // Access the
-    q.pop(); // Remove the front element
-    cout << "After pop, front element: " << q.front() << endl; //
-    cout << "Queue size: " << q.size() << endl; // Get the size of the queue
-    cout << "Is queue empty? " << q.empty() ? "Yes" : "No" << endl; // Check if the queue is empty
+    cout<<q.front()<<endl;
+    q.pop();
+    if(q.empty())
+    {
+        cout<<"Return queue is empty.."<<endl;
+    }
     return 0;
 }

@@ -1,22 +1,23 @@
 #include<iostream>
 #include<queue>
 using namespace std;
-struct  Compare
+struct comparitor
 {
-    bool operator()(int a,int b)
+    bool operator()(int a, int b) const
     {
-        return a>b;
+        return a > b;  // makes it a min-heap
     }
 };
 int main()
 {
-    priority_queue<int,vector<int>,Compare>pq;
+    priority_queue<int,vector<int>,comparitor>pq;
+    pq.push(5);
     pq.push(1);
-    pq.push(2);
-    while(!pq.empty())
-    {
-        cout<<pq.top()<<"\t";
+    pq.push(3);
+
+    while(!pq.empty()) {
+        cout << pq.top() << " ";
         pq.pop();
     }
-    return(0);
+    return 0;
 }
