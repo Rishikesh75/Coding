@@ -1,86 +1,66 @@
-//Bfs array..
 #include<iostream>
 #include<vector>
+#include<list>
 #include<queue>
 using namespace std;
-void CreateGraph(vector<vector<int>>&arr,int n)
+void CreateGraph(vector<list<int>> &Graph,int n)
 {
-    int rowindex = 0;
-    for(auto &row : arr)
+    Graph.resize(n);
+    int num;
+    for(int i=0;i<n;i++)
     {
-        int columnindex = 0;
-        for(auto &value : row)
+        while(1)
         {
-            cout<<"Enter 1 if there is Edge from"<<rowindex<<columnindex;
-            cin>>value;
-            columnindex++;
+            cout<<"Enter the Neighbours of"<<i<<":";
+            cin>>num;
+            if(num == -1)
+            {
+                break;
+            }
+            Graph[i].push_back(num);
         }
-        rowindex++;
     }
-    return;
 }
-void Display(vector<vector<int>>arr,int n)
+void display(vector<list<int>> &Graph,int n)
 {
-    cout<<"Grap:\n";
-    for(auto row : arr)
+    for(int i=0;i<Graph.size();i++)
     {
-        
-        for(auto value : row)
+        cout<<i<<":";
+        for(auto it = Graph[i].begin();it!=Graph[i].end();it++)
         {
-            cout<<value<<"\t";   
+            cout<<*it<<"\t";
         }
         cout<<"\n";
-        
     }
 }
-int Findstartindex(vector<vector<int>>Graph)
+void bfs(vector<list<int>> &Graph,int n)
 {
-    int rowindex = 0;
-    for(auto row : Graph)
-    {
-        for(auto value : row)
-        {
-            if(value == 1)
-            {
-                return rowindex;
-            }
-        }
-        rowindex++;
-    }
-    return -1;
-}
-void Bfs(vector<vector<int>>Graph,int n)
-{
-    cout<<"BFS:\t";
+    vector<int>visitedarr(n,0);
     queue<int>q;
-    vector<int>visited_arr(n,0);
-    int start_index = Findstartindex(Graph);
-    if(start_index == -1) return;
-    q.push(start_index);
-    visited_arr[start_index] = 1;
+    q.push(0);
+    visitedarr[0] = 1;
     while(!q.empty())
     {
-        int temp = q.front();
-        cout<<temp<<" ";
+        int value = q.front();
         q.pop();
-        for(int i=0;i<Graph[temp].size();i++)
+        cout<<value<<"\t";
+        for(auto it = Graph[value].begin();it!=Graph[value].end();it++)
         {
-            if(visited_arr[i] == 0)
-            {
-                q.push(i);
-                visited_arr[i] = 1;
-            }
+             if(visitedarr[*it] == 0)
+             {
+                q.push(*it);
+                visitedarr[*it]=1;
+             }
         }
     }
-    cout<<endl;
 }
 int main()
 {
     int n;
     cin>>n;
-    vector<vector<int>>Graph(n,vector<int>(n,0));
+    vector<list<int>>Graph;
     CreateGraph(Graph,n);
-    Display(Graph,n);
-    Bfs(Graph,n);
+    display(Graph,n);
+    bfs(Graph,n);
     return 0;
 }
