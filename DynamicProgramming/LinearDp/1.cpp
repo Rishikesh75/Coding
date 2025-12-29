@@ -1,33 +1,28 @@
-//Fibinoci series
 #include<iostream>
 #include<vector>
 using namespace std;
 vector<int>dp;
 int Fib(int n)
 {
+    if(n == 1)
+    {
+        return 0;
+    }
+    else if(n == 2)
+    {
+        return 1;
+    }
     if(dp[n] == -1)
     {
-        if(dp[n-1]==-1)
-        {
-            dp[n-1] = Fib(n-1);
-        }
-        if(dp[n-2] == -1)
-        {
-            dp[n-2] = Fib(n-2);
-        }
-        dp[n] = dp[n-1] + dp[n-2];
+        dp[n] = Fib(n-1) + Fib(n-2);
     }
-    
     return dp[n];
 }
 int main()
 {
-    
     int n;
     cin>>n;
     dp.resize(n+1,-1);
-    dp[0] = 0;
-    dp[1] = 1;
-    cout<<"value:"<<Fib(n);
+    cout<<Fib(n)<<endl;
     return 0;
 }
