@@ -1,49 +1,116 @@
-public class BST1
-{
-    public static class Node
-    {
+public class BST1 {
+
+    // Node definition
+    static class Node {
         int val;
-        Node left;
-        Node right;
+        Node left, right;
 
-        Node(int val)
-        {
+        Node(int val) {
             this.val = val;
-            left = null;
-            right = null;
+            left = right = null;
         }
     }
-    public static Node insertNode(int value,Node root)
-    {
-        if(root == null)
-        {
-            root = new Node(value);
-            return root;
+
+    // Insert a node into BST
+    public static Node insertNode(Node root, int value) {
+        if (root == null) {
+            return new Node(value);
         }
 
-        if(root.val > value)
-        {
-            if(root.right != null)
-                insertNode(value,root.right);
-            else
-                root.right = new Node(value);
+        if (value < root.val) {
+            root.left = insertNode(root.left, value);
+        } else if (value > root.val) {
+            root.right = insertNode(root.right, value);
         }
-        else if(root.val < value)
-        {
-            if(root.left != null)
-                insertNode(value,root.left);
-            else
-                root.left = new Node(value);
-        }
+        // duplicates are ignored
         return root;
-
     }
-    public static void main(String[] args)
+
+    // Search a value in BST
+    public static boolean findNodeInBst(Node root, int value) {
+        if (root == null) return false;
+
+        if (root.val == value) return true;
+
+        if (value < root.val)
+            return findNodeInBst(root.left, value);
+        else
+            return findNodeInBst(root.right, value);
+    }
+
+    // Validate BST using min-max approach
+    public static boolean validateBST(Node root, Integer min, Integer max) {
+        if (root == null) return true;
+
+        if ((min != null && root.val <= min) ||
+                (max != null && root.val >= max)) {
+            return false;
+        }
+
+        return validateBST(root.left, min, root.val) &&
+                validateBST(root.right, root.val, max);
+    }
+
+    // Inorder traversal (BST gives sorted output)
+    public static void inorder(Node root) {
+        if (root == null) return;
+
+        inorder(root.left);
+        System.out.print(root.val + " ");
+        inorder(root.right);
+    }
+
+    public static Node deleteNode(Node root,Integer key)
     {
+        if(root == null) return null;
 
-        Node root = insertNode(1,null);
-        System.out.printf("%d",root.val);
-        return;
+        if(key < root.val) root.left = deleteNode(root.left,key);
+
+        else if(key > root.val) root.right = deleteNode(root.right,key);
+
+        else
+        {
+            if(root.left == null) return root.right;
+
+            else if(root.right == null) return root.left;
+
+            else {
+                var successor = findMin(root.right);
+                root.val = successor.val;
+                root.right = deleteNode(root.right, successor.val);
+            }
+        }
+
+        return root;
     }
+    public static Node findMin(Node node)
+    {
+        while(node.left != null)
+        {
+            node = node.left;
+        }
+        return node;
+    }
+    // Main method
+    public static void main(String[] args) {
 
+        Node root = null;
+
+        root = insertNode(root, 10);
+        insertNode(root, 5);
+        insertNode(root, 15);
+        insertNode(root, 2);
+        insertNode(root, 7);
+        insertNode(root, 12);
+        insertNode(root, 20);
+
+        System.out.print("Inorder Traversal: ");
+        inorder(root); // sorted order
+        System.out.println();
+
+        System.out.println("Find 7: " + findNodeInBst(root, 7));
+        System.out.println("Find 100: " + findNodeInBst(root, 100));
+
+        System.out.println("Is valid BST: " + validateBST(root, null, null));
+    }
 }
