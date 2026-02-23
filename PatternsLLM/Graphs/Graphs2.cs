@@ -71,6 +71,41 @@ public class Program
 
         DisplayTopologicalSort();
     }
+
+    public static void TopologicalSort2(List<List<int>>graph)
+    {
+        Console.WriteLine("----Topological Sort Order 2----");
+        List<int> inDegree = Enumerable.Repeat(0,graph.Count).ToList();
+
+        for(int i=0;i<graph.Count;i++)
+        {
+            foreach(var node in graph[i])
+            {
+                inDegree[node] = inDegree[node] + 1;
+            }
+        }
+
+        Queue<int> queue = new Queue<int>();
+
+        for(int i=0;i<inDegree.Count;i++)
+        {
+            if(inDegree[i] == 0)
+                queue.Enqueue(i);
+        }
+
+        while(queue.Count!=0)
+        {
+            int currentNode = queue.Peek();
+            queue.Dequeue();
+            Console.WriteLine($"{currentNode}\t");
+            foreach(var node in graph[currentNode])
+            {
+                inDegree[node] = inDegree[node] - 1;
+                if(inDegree[node] == 0)
+                    queue.Enqueue(node);
+            }
+        }
+    }
     public static void Main(string[] args)
     {
         List<List<int>> graph = CreateGraph(3);
@@ -78,6 +113,8 @@ public class Program
         DisplayGraph(graph);
         
         TopologicalSort1(graph);
+
+        TopologicalSort2(graph);
 
         return;
     }
