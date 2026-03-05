@@ -1,121 +1,123 @@
-//Topological Sort
 using System;
 using System.Collections.Generic;
+
 public class Program
 {
-    
-    public static List<List<int>> CreateGraph(int n)
+    public static List<List<int>> CreateGraph()
     {
-        List<List<int>> graph = new List<List<int>>();
-
-        for(int i = 0; i < n; i++)
+        List<List<int>> graph = new List<List<int>>()
         {
-            graph.Add(new List<int>());
-        }
-
-        graph[0].AddRange(new List<int>() { 1, 2 });
+            new List<int>(){1,2},
+            new List<int>(){},
+            new List<int>(){3},
+            new List<int>(){}
+        };
 
         return graph;
     }
-    
-    public static void DisplayGraph(List<List<int>> graph)
+
+    public static void Display(List<List<int>> graph)
     {
-        foreach(var edges in graph)
+        foreach(var Edges in graph)
         {
-            foreach(var node in edges)
+            foreach(var node in Edges)
             {
                 Console.Write($"{node}\t");
             }
-            Console.WriteLine();
+                Console.WriteLine();
         }
     }
 
-    public static Stack<int> stack;
-    public static void dfs(List<List<int>>graph,int currentNode,List<bool>visitedArr)
+    public static void dfs(List<List<int>>graph,int currNode,List<bool> visitedarr)
     {
-        
-        foreach(var node in  graph[currentNode])
+        visitedarr[currNode] = true;
+
+        foreach(var node in graph[currNode])
         {
-            if(!visitedArr[node])
-            {
-                visitedArr[node] = true;
-                dfs(graph,node,visitedArr);
-            }
+            if(!visitedarr[node])
+                dfs(graph,node,visitedarr);
         }
-        
-        stack.Push(currentNode);
+
+        stack.Push(currNode);
+
         return;
     }
-    public static void DisplayTopologicalSort()
+
+    public static Stack<int> stack = new Stack<int>();
+    public static void TopologicalSort(List<List<int>> graph)
     {
-        Console.WriteLine("Topological Sort Order");
-        while(stack.Count!=0)
-        {
-            Console.WriteLine($"{stack.Peek()}");
-            stack.Pop();
-        }
-        return;
-    }
-    public static void TopologicalSort1(List<List<int>> graph)
-    {
-        List<bool> visitedArr = Enumerable.Repeat(false,graph.Count).ToList();
-        stack = new Stack<int>();
+    
+        List<bool>visitedarr = Enumerable.Repeat(false,graph.Count).ToList();
+
         for(int i=0;i<graph.Count;i++)
         {
-            if(!visitedArr[i])
-            {
-                visitedArr[i] = true;
-                dfs(graph,i,visitedArr);
-            }
-        }
+            if(!visitedarr[i])
+                dfs(graph,i,visitedarr);
+        }    
 
-        DisplayTopologicalSort();
+        Console.Write("Topological Sort:");
+        while(stack.Count !=0)
+        {
+            int val = stack.Peek();
+            stack.Pop();
+
+            Console.Write($"{val}\t");
+        }
+        Console.WriteLine();
     }
 
-    public static void TopologicalSort2(List<List<int>>graph)
+
+    public static void TopologicalSort2(List<List<int>> graph)
     {
-        Console.WriteLine("----Topological Sort Order 2----");
+
         List<int> inDegree = Enumerable.Repeat(0,graph.Count).ToList();
 
-        for(int i=0;i<graph.Count;i++)
+        foreach(var edge in graph)
         {
-            foreach(var node in graph[i])
+            foreach(var node in edge)
             {
-                inDegree[node] = inDegree[node] + 1;
+                inDegree[node]++;
             }
         }
 
         Queue<int> queue = new Queue<int>();
 
-        for(int i=0;i<inDegree.Count;i++)
+        foreach(var node in inDegree)
         {
-            if(inDegree[i] == 0)
-                queue.Enqueue(i);
+            if(inDegree[node] == 0)
+                queue.Enqueue(node);
         }
 
-        while(queue.Count!=0)
+        Console.Write("Topological Sort:\t");
+        while(queue.Count !=0)
         {
-            int currentNode = queue.Peek();
+            
+            int u = queue.Peek();
             queue.Dequeue();
-            Console.WriteLine($"{currentNode}\t");
-            foreach(var node in graph[currentNode])
-            {
-                inDegree[node] = inDegree[node] - 1;
-                if(inDegree[node] == 0)
-                    queue.Enqueue(node);
-            }
-        }
-    }
-    public static void Main(string[] args)
-    {
-        List<List<int>> graph = CreateGraph(3);
 
-        DisplayGraph(graph);
-        
-        TopologicalSort1(graph);
+            Console.Write($"{u}\t");
+
+            foreach(var v in graph[u])
+            {
+                inDegree[v]--;
+                if(inDegree[v] == 0)
+                    queue.Enqueue(v);
+            }
+
+        }
+        Console.WriteLine();
+        return;
+
+    }
+    public static void Main()
+    {
+        var graph = CreateGraph();
+
+        Display(graph);
+
+        TopologicalSort(graph);
 
         TopologicalSort2(graph);
-
-        return;
     }
+
 }

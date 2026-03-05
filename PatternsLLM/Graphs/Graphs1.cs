@@ -1,125 +1,137 @@
-
+//Grapsh Done
 using System;
 using System.Collections.Generic;
+
 public class Program
 {
-    
-    public static List<List<int>> CreateArr(int n)
+    public static List<List<int>> CreateGraph()
     {
-        List<List<int>>graph = new List<List<int>>();
-
-        for(int i=0;i<n;i++)
-        {
-            graph.Add(new List<int>(){});
-        }
-
-        graph[0].AddRange(new List<int>(){1,2});
+        List<List<int>> graph =  new List<List<int>>{
+            new List<int>{1,2},
+            new List<int>{},
+            new List<int>{}
+            };
 
         return graph;
     }
     
-    public static void DisplayGraph(List<List<int>> graph)
+    public static void Display(List<List<int>>graph)
     {
-        foreach(var arr in graph)
+        foreach(var edges in graph)
         {
-            foreach(var item in arr)
+            
+            foreach(var node in edges)
             {
-                Console.Write($"{item}\t");
+                Console.Write($"{node}\t");
             }
+
             Console.WriteLine();
         }
     }
 
-    public static void Dfs(List<List<int>> graph)
+
+    public static void Dfs(List<List<int>>graph)
     {
-        List<bool> visitedArr = new List<bool>(graph.Count);
-        for(int i = 0; i < graph.Count; i++)
-        {
-            visitedArr.Add(false);
-        }
-        
-        Stack<int> stack = new Stack<int>();
+        List<bool> visitedarr = Enumerable.Repeat(false,graph.Count).ToList();
+        Stack<int>stack = new Stack<int>();
+
         stack.Push(0);
-        visitedArr[0] = true;
-        
-        while(stack.Count!=0)
+        visitedarr[0] = true;
+        Console.Write("Dfs:");
+
+        while(stack.Count != 0)
         {
-            int val = stack.Peek();
-            Console.Write($"{val}\t");
+            
+            int currNode = stack.Peek();
             stack.Pop();
-            foreach(var node in graph[val])
+
+            Console.Write($"{currNode}\t");
+
+            foreach(var node in graph[currNode])
             {
-                if(!visitedArr[node])
+                if(!visitedarr[node])
                 {
+                    visitedarr[node] = true;
                     stack.Push(node);
-                    visitedArr[node] = true;
                 }
             }
         }
-        
+
         Console.WriteLine();
+        return;
     }
 
-    public static List<bool> visitedArr;
-    public static void DfsRecurssion(List<List<int>>graph,int startNode)
+    public static void DFSRecurssion(List<List<int>>graph,int currNode,List<bool>visitedArr)
     {
-        Console.Write($"{startNode}\t");
+        visitedArr[currNode] = true;
 
-        foreach(var node in graph[startNode])
+        // Console.Write($"{currNode}");
+
+        foreach(var node in graph[currNode])
         {
             if(!visitedArr[node])
-                DfsRecurssion(graph,node);   
+                DFSRecurssion(graph,node,visitedArr);
         }
 
+        return;
     }
 
-    public static void  Bfs(List<List<int>> graph)
+    public static void BFS(List<List<int>>graph,int currNode)
     {
-        List<bool>visitedArr = new List<bool>(graph.Count);
-        
-        for(int i=0;i<graph.Count;i++)
-        {
-            visitedArr.Add(false);
-        }
+        List<bool>visitedArr = Enumerable.Repeat(false,graph.Count).ToList();
 
-        Queue<int>queue = new Queue<int>(){};
+        Queue<int> queue = new Queue<int>();
         queue.Enqueue(0);
         visitedArr[0] = true;
-
-        while(queue.Count != 0)
+        Console.Write("BFS:\t");
+        while(queue.Count !=0)
         {
-            int val = queue.Peek();
-            Console.Write($"{val}\t");
+            
+            int top = queue.Peek();
             queue.Dequeue();
-            foreach(var node in graph[val])
+
+            Console.Write($"{top}\t");
+
+            foreach(var val in graph[top])
             {
-                if(!visitedArr[node])
+                if(!visitedArr[val])
                 {
-                    queue.Enqueue(node);
-                    visitedArr[node] = true;
+                    queue.Enqueue(val);
+                    visitedArr[val] = true;
                 }
             }
         }
-
+        Console.WriteLine();
     }
-    public static void Main(string[] args)
+
+    public static void  Main(string[] args)
     {
-        int n = 3;
-        var graph = CreateArr(n);
+        
+        var graph = CreateGraph();
 
-        DisplayGraph(graph);
+        Display(graph);
 
-
-        Console.WriteLine("----Dfs Traversal----");
         Dfs(graph);
 
-
-        Console.WriteLine("----Bfs Traversal----");
-        Bfs(graph);
-
+        Console.Write("Dfs Recurssion:");
+        DFSRecurssion(graph,0,Enumerable.Repeat(false,graph.Count).ToList());
         Console.WriteLine();
-        Console.WriteLine("----Dfs Traversal Recurssion----");
-        visitedArr = Enumerable.Repeat(false,n).ToList();
-        DfsRecurssion(graph,0);
+
+        BFS(graph,0);
+
+
+        int noOfConnectedComponent = 0;
+        var visitedArr = Enumerable.Repeat(false,graph.Count).ToList();
+        for(int i=0;i<graph.Count;i++)
+        {
+            if(!visitedArr[i])
+            {
+                DFSRecurssion(graph,i,visitedArr);
+                noOfConnectedComponent++;
+            }    
+        }
+
+        Console.WriteLine($"Connected Componenets:{noOfConnectedComponent}\t");
     }
+
 }

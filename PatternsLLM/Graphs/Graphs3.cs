@@ -1,67 +1,78 @@
-//'
 using System;
 using System.Collections.Generic;
-using System.Linq;
-
 public class Program
 {
-    public static List<List<(int Node,int Weight)>> CreateGraph()
+    
+    public static List<List<(int V,int Wt)>> CreateGraph()
     {
-        List<List<(int Node,int Weight)>> graph = new List<List<(int Node, int Weight)>>()
+        List<List<(int V,int Wt)>> graph = new List<List<(int V, int Wt)>>()
         {
-            new List<(int Node,int Weight)>(){(1,1),(2,2)},
-            new List<(int Node,int Weight)>(),
-            new List<(int Node,int Weight)>()
+            new List<(int V, int Wt)>(){(1,1),(2,2)},
+            new List<(int V, int Wt)>(){},
+            new List<(int V, int Wt)>(){(3,3)},
+            new List<(int V,int Wt)>(){}
         };
 
         return graph;
     }
 
-    public static void DisplayDistance(List<int> DistanceArr)
+    public static void DisplayGraph(List<List<(int V,int Wt)>> graph)
     {
-        int i = 0;
-        foreach (var dis in DistanceArr)
+        foreach(var edges in graph)
         {
-            Console.Write($"{i}:{dis}\t");
-            i++;
+            foreach(var node in edges)
+            {
+                 Console.Write($"{node.V} {node.Wt} \t");
+            }
+            Console.WriteLine();
         }
+    }
+
+    
+    public static void DikstraAlgorithm(List<List<(int V,int Wt)>>graph)
+    {
+        PriorityQueue<(int v,int wt),int> pq = new PriorityQueue<(int v,int wt),int>();
+
+        List<int> distanceArr = Enumerable.Repeat(int.MaxValue,graph.Count).ToList();
+
+        pq.Enqueue((0,0),0);
+
+        while(pq.Count !=0)
+        {
+            var top = pq.Peek();
+            pq.Dequeue();
+
+            var u = top.v;
+            var dis = top.wt;
+
+            if(distanceArr[u] > dis)
+                distanceArr[u] = dis;
+
+            foreach(var node in graph[u])
+            {
+                if(distanceArr[node.V] > dis + node.Wt)
+                    pq.Enqueue((node.V,dis+node.Wt),dis+node.Wt);
+            }
+
+        }
+
+        Console.Write("Distance:");
+        foreach(var dist in distanceArr)
+        {
+            Console.Write($"{dist}\t");
+        }
+
         Console.WriteLine();
     }
-
-    public static void DikstraAlgorithm(List<List<(int Node,int Weight)>> graph, int Node)
-    {
-        List<int> distanceArr = Enumerable.Repeat(int.MaxValue, graph.Count).ToList();
-        distanceArr[Node] = 0;
-
-        PriorityQueue<(int Node,int Weight), int> pq = new PriorityQueue<(int Node, int Weight), int>();
-        pq.Enqueue((Node, 0), 0);
-
-        while (pq.Count != 0)
-        {
-            var currentNode = pq.Dequeue();
-
-            if (currentNode.Weight > distanceArr[currentNode.Node])
-                continue;
-
-            foreach (var node in graph[currentNode.Node])
-            {
-                int newDistance = currentNode.Weight + node.Weight;
-
-                // ✅ Proper relaxation step
-                if (newDistance < distanceArr[node.Node])
-                {
-                    distanceArr[node.Node] = newDistance;
-                    pq.Enqueue((node.Node, newDistance), newDistance);
-                }
-            }
-        }
-
-        DisplayDistance(distanceArr);
-    }
-
+    
     public static void Main(string[] args)
     {
-        List<List<(int Node,int Weight)>> graph = CreateGraph();
-        DikstraAlgorithm(graph, 0);
+        var graph = CreateGraph();
+
+        DisplayGraph(graph);
+
+        DikstraAlgorithm(graph);
     }
+
+
 }
