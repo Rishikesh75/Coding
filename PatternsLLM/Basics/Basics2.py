@@ -81,14 +81,13 @@ def leapYear(num1:int)-> int:
 
 
 def calculator(num1 : int,num2:int,char : str)->int:
-    
+
     match char[0]:
         case '+':
-            val = num1+num2;        
-            break;
+            val = num1+num2
         case  '-':
-            val = num1-num2;
-            break;
+            val = num1-num2
+
 print(f"add:{add(1,2)} sub:{sub(1,2)} mul:{mul(1,2)} div:{div(1,2)}");
 
 print(f"float:{convertToFloat(1)}");

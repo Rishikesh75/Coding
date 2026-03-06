@@ -1,15 +1,10 @@
-print("Helloo Python...!")
+print("Hello Python...")
 
-name : str = input("Enter your name: ")
-age : int = int(input("Enter your age: "))
-city : str = input("Enter your city: ")
+name : str = input("Enter you Name:")
+age : int = int(input("Enter your Age:"))
+city : str = input("Enter your City:")
 
-print(f"Hello {name}, you are {age} years old and you live in {city}.")
-
-n : int = int(input("Enter a number: "))
+print(f"{name} {age} {city}")
 
 
-for i in range(1,n+1):
-    for j in range(1,i+1):
-        print("*", end=" ")
-    print()
+
