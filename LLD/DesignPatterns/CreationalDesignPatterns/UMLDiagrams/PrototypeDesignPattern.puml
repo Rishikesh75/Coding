@@ -1,0 +1,11 @@
+@startuml
+
+class Product
+{
+    - id : Integer
+    - name : String
+
+    + clone() : Object
+}
+
+@enduml

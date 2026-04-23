@@ -1,0 +1,11 @@
+@startuml
+
+class Product
+{
+
+    - Product()
+    + getInstance() : Product
+}
+
+
+@enduml

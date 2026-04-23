@@ -1,0 +1,25 @@
+@startuml
+
+interface Component {
+    + showDetails()
+}
+
+class File {
+    - name : String
+    + showDetails()
+}
+
+class Folder {
+    - name : String
+    - children : List<Component>
+
+    + add(c : Component)
+    + remove(c : Component)
+    + showDetails()
+}
+
+Component <|.. File
+Component <|.. Folder
+Folder --> Component : contains
+
+@enduml

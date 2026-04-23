@@ -1,0 +1,25 @@
+@startuml
+
+' Interfaces
+interface IProduct
+
+interface IFactory {
+    + createProduct() : IProduct
+}
+
+' Concrete Product
+class Product
+
+' Concrete Factory
+class Factory {
+   + createProduct() : IProduct
+}
+
+' Relationships
+Product ..|> IProduct
+Factory ..|> IFactory
+
+' Factory creates Product
+Factory --> IProduct
+
+@enduml

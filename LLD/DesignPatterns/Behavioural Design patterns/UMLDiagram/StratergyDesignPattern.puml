@@ -1,0 +1,33 @@
+@startuml
+
+'Interfaces
+interface IPaymentMode
+{
+    + pay() : void
+}
+
+
+'Classes
+class UPIPaymentMode
+{
+    + pay() : void
+}
+
+class CreaditCardPaymentMode
+{
+    + pay() : void
+}
+
+class User
+{
+    - pay : IPaymentMode
+
+    User(paymnetMode : IPaymentMode)
+}
+
+'Relations
+UPIPaymentMode ..|> IPaymentMode
+CreaditCardPaymentMode ..|> IPaymentMode
+User --|> IPaymentMode
+
+@enduml

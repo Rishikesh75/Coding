@@ -1,0 +1,26 @@
+@startuml
+
+
+class Product
+{
+    - id : Integer
+    - name : String
+
+    - Product(builder : Builder)
+}
+
+
+class "Product.Builder" as Builder
+{
+    - id : Integer
+    - name : String
+
+    + setId(id : Integer) : Builder
+    + setName(name : String) : Builder
+    + Build() : Product
+}
+
+Product +-- Builder
+Builder --> Product
+
+@enduml
