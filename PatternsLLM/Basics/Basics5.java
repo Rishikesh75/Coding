@@ -1,67 +1,178 @@
-import java.util.*;
-public class Basics5
-{
-    public static void main(String[] args)
+import java.lang.*;
+public class Basics5 {
+    
+    public static void print1to100()
     {
-        Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        for(int i=1;i<=n;i++)
+        for(int i=0;i<100;i++)
         {
             System.out.printf("%d\t",i);
         }
         System.out.println();
+    }
+
+    public static void print100to1()
+    {
+        for(int i=100;i>=0;i--)
+        {
+            System.out.printf("%d\t",i);
+        }
+
+        return;
+    }
+
+    public static int sum(int n)
+    {
+        int sum = 0;
+        for(int i=1;i<=n;i++)
+        {   
+            sum += i;
+        }
+        return sum;
+    }
+
+    public static void Mutiply(int n)
+    {
         for(int i=1;i<=10;i++)
         {
-            System.out.printf("%d * %d=%d\n",n,i,n*i);
+            System.out.printf("%d*%d:{%d}\n",n,i,n*i);
         }
-        int val = 1;
-        for(int i=1;i<=n;i++)
-        {
-            val = val * i;
-        }
-        System.out.printf("factorial value:%d\n",val);
 
-        int reversedNumber = 0;
-        int orginalNumber = n;
-        int countDigits = 0;
+        return;
+    }
+
+    public static int findFactorial(int n)
+    {
+        int val = 1;
+
+        for(int i=1;i<n;i++)
+        {
+            val *= i;
+        }
+
+        return val;
+    }
+
+    public static int reverseNumber(int n)
+    {
+        int val = 0;
+
+        while(n != 0)
+        {
+            int rem = n % 10;
+            val = val * 10 + rem;
+
+            n = n / 10;
+        }
+
+        return val;
+    }
+
+    public static boolean  isPlaimdrome(int val)
+    {
+        String valstr = Integer.toString(val);
+
+        StringBuilder sb = new StringBuilder(valstr);
+        
+        int i = 0;
+        int j = sb.length()-1;
+
+        while(i<j)
+        {
+            if(sb.charAt(i) != sb.charAt(j))
+                return  false;
+
+            i++;
+            j--;
+        }
+
+        return true;
+    }
+
+    public static int countDigits(int n)
+    {
+        int count = 0;
+
+        while(n!=0)
+        {
+            count++;
+            n = n / 10;
+        }
+
+        return count;
+    }
+
+    public static int sumOfDigits(int n)
+    {
         int sumOfDigits = 0;
+
         while(n!=0)
         {
             int rem = n % 10;
-            sumOfDigits = sumOfDigits + rem;
+            sumOfDigits += rem;
             n = n / 10;
-            reversedNumber = reversedNumber * 10 + rem;
-            countDigits++;
         }
-        boolean isPlaimdrome = reversedNumber == orginalNumber ? true : false;
-        System.out.printf("Orginal Number :%d Reversed Number:%d palimdrome:%b No of Digits:%d Sum of Digits:%d\n",orginalNumber,reversedNumber,isPlaimdrome,countDigits,sumOfDigits);
 
-        int prev = 0;
-        int curr = 1;
-        if(n == 1) System.out.printf("0\t");
-        if(n == 2) System.out.printf("1\t");
-        else
+        return sumOfDigits;
+    }
+
+    public static void printFib(int n)
+    {
+        int num1= 0;
+        int num2 = 1;
+
+        int val = 0;
+
+        while(val<n)
         {
-            System.out.printf("0\t");
-            System.out.printf("1\t");
-            for(int i=3;i<=orginalNumber;i++)
+            if(val == 0)
             {
-                int currentval = prev + curr;
-                prev = curr;
-                curr = currentval;
-                System.out.printf("%d\t",currentval);
+                System.out.printf("%d\t",num1);
+                val++;
+                continue;
             }
-        }
-        System.out.println();
-        boolean isPrime = true;
-        int count = 1;
+                
+            if(val == 1)
+            {
+                System.out.printf("%d\t",num2);
+                val++;
+                continue;
+            }
 
-        for(int i=2;i<orginalNumber;i++)
-        {
-            if(orginalNumber % i == 0) count++;
-            if(count >=2) isPrime = false;
+            int tempVal = num1 + num2;
+            System.out.printf("%d\t",tempVal);
+            num1 = num2;
+            num2 = tempVal;
+            val++;
         }
-        System.out.printf("isPrime:%b",isPrime);
+
+        System.out.println();
+        return;
+    }
+
+    public static boolean isPrime(int n)
+    {
+        for(int i=2;i<n;i++)
+        {
+            if(n%i == 0)
+                return false;
+        }
+
+        return true;
+    }
+    public static void main(String[] args) {
+        // print100to1();
+
+        // print100to1();
+
+        // sum(100);
+
+        // Mutiply(100);
+
+        // isPlaimdrome(101);
+
+        printFib(20);
+
+        isPrime(5);
 
     }
 }

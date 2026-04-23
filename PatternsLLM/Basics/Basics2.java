@@ -1,41 +1,74 @@
-import java.util.*;
-public class Basics2
-{
-    public static void main(String[] args)
+import java.util.Scanner;
+
+public class Basics2 {
+    
+    public static int sum(int a,int b)
     {
-        Scanner sc = new Scanner(System.in);
-
-        int i =1;
-        long l = 12121231;
-
-        float f = 1.1f;
-        double d = 1.22;
-
-        boolean b = true;
-
-        char c = '1';
-        String s = "djfals";
-
-        System.out.printf("%d %d %f %f %b %c %s\n",i,l,f,d,b,c,s);
-
-        int num1 = sc.nextInt();
-        int num2 = sc.nextInt();
-
-        System.out.printf("sum:%d sub:%d mul:%d div:%f",num1+num2,num1-num2,num1*num2,(double)num1/num2);
-
-        double dInt = (double)i;
-        System.out.printf("Integer value:%d Double Value:%f\n",i,dInt);
-
-        System.out.printf("Before Swap:num1:%d num2:%d\n",num1,num2);
-
-        num1 = num1-num2;
-        num2 = num2+num1;
-        num1 = num2 - num1;
-
-        System.out.printf("After Swap:num1:%d num2:%d\n",num1,num2);
-
-        int asciValue = (int)'c';
-        System.out.printf("Ascivalue:%d",asciValue);
+        return a+b;
     }
 
+    public static int difference(int a,int b)
+    {
+        return a-b;
+    }
+
+    public static int mutiply(int a,int b)
+    {
+        return a*b;
+    }
+
+    public static double divison(int a, int b) {
+    if (b == 0) {
+        throw new IllegalArgumentException("Division by zero not allowed");
+    }
+
+    return (double) a / b;
+    }
+
+    public static  void swap(int[] arr){
+        Integer temp = arr[1];
+        arr[1] = arr[0];
+        arr[0] = temp;
+        return;
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+    //     byte b = Byte.parseByte(sc.nextLine());
+    //     short sh = Short.parseShort(sc.nextLine());
+    //     int i = Integer.parseInt(sc.nextLine());
+    //     long l = Long.parseLong(sc.nextLine());
+
+    //     char c = sc.nextLine().charAt(0);
+    //     String s = sc.nextLine();
+
+    //     double d = Double.parseDouble(sc.nextLine());
+    //     float f = Float.parseFloat(sc.nextLine());
+
+    //     boolean bool = true;
+
+    //    System.out.printf("%d %d %d %d %c %s %f %f %b",b,sh,i,l,c,s,d,f,bool);
+
+    //    System.out.printf("%d %d %d %.2f",sum(1,2),difference(1,2),mutiply(2, 3),divison(4, 5));
+
+    // Integer i1 = 1;
+    // Integer i2 = 2;
+    // double doub = (double) i1;
+    
+    // System.out.printf("%d %d",i1,i2);
+    // swap(i1,i2);
+
+    // System.out.printf("%d %d",i1,i2);
+
+    // int i = (char) 'A';
+
+    // System.out.printf("ASCI Value:%d",i);
+
+    int[] arr = {1,2};
+    
+    System.out.printf("%d %d",arr[0],arr[1]);
+    swap(arr);
+    System.out.printf("%d %d",arr[0],arr[1]);
+
+    }
 }

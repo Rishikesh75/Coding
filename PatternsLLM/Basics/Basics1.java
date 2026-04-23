@@ -1,33 +1,37 @@
-import java.util.*;
-public class Basics1
-{
-    public static void main(String[] args)
-    {
+import java.util.Scanner;
+
+public class Basics1 {
+    
+    public static void main(String[] args) {
+        System.out.println("Helloo World");
+
         Scanner sc = new Scanner(System.in);
-        System.out.println("Helloo java");
+        
+        System.out.print("Enter the name: ");
+        String name = sc.nextLine();
 
-        String  name;
-        int age;
-        String city;
+        System.out.print("Enter the age: ");
+        int age = Integer.parseInt(sc.nextLine());
+        
 
-        System.out.println("Enter Name Age city in java");
-        name = sc.next();
-        age = sc.nextInt();
-        city = sc.next();
-        System.out.printf("%s %d %s\n",name,age,city);
+        System.out.print("Enter the city: ");
+        String city = sc.nextLine();
 
-        int n = sc.nextInt();
+        System.out.printf("Name: %s Age: %d City: %s\n", name, age, city);
+
+
+
+        System.out.print("Enter the n:");
+        int n = Integer.parseInt(sc.nextLine());
+
         for(int i=1;i<=n;i++)
         {
             for(int j=1;j<=i;j++)
             {
-                System.out.print("*");
+                System.out.print("*\t");
             }
             System.out.println();
         }
-
-
-
-
     }
+
 }

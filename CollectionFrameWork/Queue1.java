@@ -1,14 +1,16 @@
-import java.util.*;
-public class Queue1{
-    public static void main(String[] args){
-        Queue<Integer>queue = new LinkedList<Integer>();
+
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Queue1
+{
+    public static void main(String[] args) {
+    
+        Queue<Integer> queue = new LinkedList<Integer>();
 
         queue.add(1);
-
-        while(!queue.isEmpty()){
-            int val = queue.peek();
-            queue.poll();
-            System.out.printf("val:%d",val);
-        }
+        queue.peek();
+        queue.poll();
+        queue.isEmpty();
     }
 }

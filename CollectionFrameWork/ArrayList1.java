@@ -1,33 +1,44 @@
-import java.util.*;
-public class ArrayList1
-{
-    public static void main(String[] args){
-        List<Integer> list = new ArrayList<>();
 
-        //Adding the value
-        list.add(1);
-        list.add(2);
+import java.util.ArrayList;
+import java.util.List;
 
-        //Add (Index,value)
-        list.add(1,1);
+public class ArrayList1{
 
-        //Remove the index
-        list.remove(1);
 
-        //get the index the value
-        System.out.printf("value:%d\n",list.get(1));
+    public static void display(List<Integer> list){
 
-        //Iterator
-        Iterator<Integer> it = list.iterator();
-        while(it.hasNext()){
-            System.out.printf("%d\t",it.next());
+        System.out.print("value:");
+        for(var val : list){
+            System.out.printf("%d",val);
         }
         System.out.println();
-        list.set(1,3);
+    }
 
-        System.out.printf("Size:%d",list.size());
+    public static void main(String[] args) {
+        
+        List<Integer> list = new ArrayList<>();
 
-//      List<Integer> list1 = list.clone();
 
+        list.add(1);
+        list.add(1,1);
+
+
+        list.addAll(1,List.of(1,2,3,4));
+        list.addAll(List.of(1,2,3,4,5));
+
+
+        list.remove(1);
+        list.remove(Integer.valueOf(1));
+        list.removeIf((x) -> x == 1);
+        list.subList(1, 2).clear();
+
+
+        list.get(1);
+        list.set(1,2);
+
+        list.sort((x1,x2)-> x1 - x2);
+
+
+        return;
     }
 }

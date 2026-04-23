@@ -1,78 +1,60 @@
-import java.util.*;
-public class Basics4
-{
-    public static void main(String[] args)
+import java.util.Scanner;
+
+public class Basics4 {
+    public static double cal(int a,int b,char c)
     {
-       Scanner sc = new Scanner(System.in);
+        double v;
+        switch (c) {
+            case '+':
+                {
+                    v = (double)a + b;
+                    break;
+                }
+            case '-':
+                {
+                    v = (double) a - b;
+                    break;
+                }
+            case '*':
+                {
+                    v = (double) a * b;
+                    break;
+                }
+            case '/':
+                {
+                    v = (double) a /b;
+                    break;
+                }
+            default:
+                throw new AssertionError();
+        }
 
-       int val1 = sc.nextInt();
-       char c = sc.next().charAt(0);
-       int val2 = sc.nextInt();
+        return v;
+    }
 
-       switch(c)
-       {
-           case '+':
-           {
-               System.out.printf("Add:%d\n",val1+val2);
-               break;
-           }
-           case '-':
-           {
-               System.out.printf("Sub:%d\n",val1-val2);
-               break;
-           }
-           case '*':
-           {
-               System.out.printf("Mul:%d\n",val1*val2);
-               break;
-           }
-           case '/':
-           {
-               System.out.printf("Div:%f\n",(double)val1/val2);
-               break;
-           }
-           default:
-           {
-               System.out.printf("Not Supported..");
-               break;
-           }
+    public static boolean isVowel(char c)
+    {
+        if(c == 'a' || c == 'e' || c == 'i' || c == 'o'  || c == 'u')
+            return true;
+        
+        return  false;
+    }
 
-       }
+    public static char Marks(int marks)
+    {
+        if(marks > 90)
+            return 'A';
+        else if(marks > 80)
+            return 'B';
+        else
+            return 'C';
+    }
+    public static  void main(String[] args)
+    {
+        Scanner sc = new Scanner(System.in);
+        cal(1, 2, '+');
 
-       c = sc.next().charAt(0);
-       switch (c)
-       {
-           case 'a':
-           case 'A':
-           case 'e':
-           case 'E':
-           case'i' :
-           case 'I':
-           case 'o':
-           case 'O':
-           case 'u':
-           case 'U':
-           {
-               System.out.println("Is Vowel..\n");
-               break;
-           }
-           default:
-           {
-               System.out.println("Is Consonent..\n");
-               break;
-           }
-       }
-
-
-       int marks = sc.nextInt();
-
-       if(marks>90)
-       {
-           System.out.println("A");
-       }
-       else if(marks<90)
-       {
-           System.out.println("Not A");
-       }
+        System.out.printf("isVowel:%b",isVowel(sc.nextLine().charAt(0)));
+        return;
     }
 }

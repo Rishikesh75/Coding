@@ -1,52 +1,69 @@
-import java.util.*;
-public class Basics3
-{
-    public static void main(String[] args)
+
+import java.util.Scanner;
+
+public class Basics3 {
+    
+    public static boolean isEven(int a)
     {
+        return a % 2 == 0;
+    }
+
+    public static int largestNumber(int a,int b)
+    {
+        if(a>b)
+            return a;
+
+        return b;
+    }
+
+    public static int largestNumber(int a,int b,int c)
+    {
+        if(a>b)
+        {
+            if(a>c)
+                return a;
+        }
+        else 
+        {
+            if(b>c)
+                return b;
+        }
+
+        return  c;
+            
+    }
+
+    public static char findPosAndNegative(int a)
+    {
+        if(a>0)
+            return 'P';
+        if(a == 0)
+            return '0';
+        else
+            return 'N';
+    }
+
+    public static boolean isLeapYear(int n)
+    {
+        if(n % 4 == 0)
+        {
+            if(n%100 == 0 && n % 400 !=0)
+                return  false;
+
+            else
+                return true;
+        }
+
+        return false;
+    }
+    public static void main(String[] args) {
+        
         Scanner sc = new Scanner(System.in);
 
-        int n = sc.nextInt();
-
-        if(n%2 == 0)
-            System.out.println("Even Number");
-        else
-            System.out.println("Odd Number");
-
-        int num1 = sc.nextInt();
-        int num2 = sc.nextInt();
-
-        if(num1>num2)
-            System.out.println("Num1 is greather than Num2");
-        if(num1<num2)
-            System.out.println("Num2 is greather than Num1");
-
-        int num3  = sc.nextInt();
-
-        if(num3>num2)
-        {
-            if(num3>num1) System.out.println("Num3 is greathest");
-            else System.out.println("Num1 is greathest");
-        }
-        else
-        {
-            if(num2>num1) System.out.println("num2 is greatest");
-            else System.out.println("Num1 is greathest");
-        }
-
-        int number = sc.nextInt();
-
-        if(number>0)
-            System.out.println("Number is positive..");
-        else if(number<0)
-            System.out.println("Number is negative...");
-
-        int leapYear = sc.nextInt();
-
-        if(leapYear % 400 == 0 || leapYear % 100 != 0 &&  leapYear %4 == 0)
-        {
-                    System.out.println("Not Leap Year");
-        }
-        else
-            System.out.println("Not Leap year");
+        // System.out.printf("%b\n",isEven(Integer.parseInt(sc.nextLine())));
+        // System.out.printf("%d\n",largestNumber(Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine())));
+        // System.out.printf("%d\n",largestNumber(Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine()), Integer.parseInt(sc.nextLine())));
+        System.out.printf("Is Leap Year:%b\n",isLeapYear(Integer.parseInt(sc.nextLine())));
+        return;
     }
 }

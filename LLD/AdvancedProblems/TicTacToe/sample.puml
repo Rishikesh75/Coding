@@ -1,0 +1,86 @@
+@startuml
+
+'======================
+' ENUM
+'======================
+enum Symbol {
+    PLUS
+    MINUS
+    MULTIPLY
+}
+
+'======================
+' INTERFACE
+'======================
+interface IUser {
+    +login(username: String, password: String): boolean
+    +logout(): void
+}
+
+'======================
+' ABSTRACT CLASS
+'======================
+abstract class Person {
+    -id: int
+    #name: String
+    +age: int
+
+    +getDetails(): String
+    +setName(name: String): void
+}
+
+'======================
+' CLASS WITH MEMBERS
+'======================
+class User {
+    ' Fields / Attributes
+    -userId: int
+    +username: String
+    #email: String
+    {static} userCount: int
+
+    ' Constructor
+    +User(username: String, email: String)
+
+
+    ' Methods
+    +login(): boolean
+    +logout(): void
+    -validatePassword(): boolean
+    {static} +getUserCount(): int
+}
+
+'======================
+' ANOTHER CLASS
+'======================
+class Order {
+    -orderId: int
+    +amount: double
+
+    +placeOrder(): void
+    +cancelOrder(): void
+}
+
+'======================
+' RELATIONSHIPS
+'======================
+
+' Inheritance (User extends Person)
+User --|> Person
+
+' Interface implementation
+User ..|> IUser
+
+' Association
+User --> Order
+
+' Aggregation (weak relationship)
+User o-- Order
+
+' Composition (strong relationship)
+Order *-- "1..*" Item
+
+' Dependency
+User ..> Symbol
+
+@enduml

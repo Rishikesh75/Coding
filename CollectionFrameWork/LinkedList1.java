@@ -1,20 +1,28 @@
-import java.util.*;
+
+import java.util.LinkedList;
+
 public class LinkedList1{
+
+
     public static void main(String[] args){
-        List<Integer> list = new LinkedList<>();
+        LinkedList<Integer> linkedlist = new LinkedList<>();
 
-        list.addFirst(1);
-        list.addLast(2);
+        linkedlist.addFirst(1);
+        linkedlist.addLast(1);
 
-        System.out.printf("%d\t%d\n",list.getFirst(),list.getLast());
 
-        Iterator<Integer> it = list.iterator();
+        linkedlist.getFirst();
+        linkedlist.getLast();
 
-        while(it.hasNext()){
-            System.out.printf("%d\t",it.next());
-        }
+        linkedlist.removeFirst();
+        linkedlist.removeLast();
 
-        list.removeFirst();
-        list.removeLast();
+        linkedlist.set(1,1);
+        linkedlist.get(11);
+        linkedlist.remove(1);
+        
+        //iterator() hasNext() next()
+
+        return;
     }
 }
