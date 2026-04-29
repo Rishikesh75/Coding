@@ -1,162 +1,208 @@
-
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-class Count{
-    public int even;
-    public int odd;
-
-    public Count(int even,int odd)
-    {
-        this.even = even;
-        this.odd = odd;
-    }
-}
+import java.util.Map;
 public class Array1
 {
-    
-    public static List<Integer> list = IntStream.range(0, 5)
-                        .mapToObj(i -> i)
-                        .collect(Collectors.toList());;
+    public static class Pair{
+        public Integer first;
+        public Integer second;
 
-    
-    public static int findLargestElement()
-    {
-
-        int largestElement = Integer.MIN_VALUE;
-
-        for(int val : list)
-        {
-            largestElement = Math.max(val, largestElement);
+        public Pair(Integer first,Integer second){
+            this.first = first;
+            this.second = second;
         }
-
-        return largestElement;
     }
 
-    public static int findSecondLargest()
-    {
 
-        int firstLargestElement = list.get(0);
-        int seconLargestElement = Integer.MIN_VALUE;
 
-        for(int i=1;i<list.size();i++)
-        {
-            int currVal = list.get(i);
+    public static Pair findLargestAndSmallest(List<Integer> list){
+        Pair pair = new Pair(Integer.MAX_VALUE, Integer.MIN_VALUE);
 
-            if(currVal > firstLargestElement){
-                
-                seconLargestElement = firstLargestElement;
-                firstLargestElement = currVal;
+        for(var val : list){
+            pair.first = Math.min(pair.first,val);
+            pair.second = Math.max(pair.second,val);
+        }
+
+        System.out.printf("Smallest:%d\tLargest:%d\n",pair.first,pair.second);
+
+        return pair;
+    }
+
+    public static int findSecondLargest(List<Integer> list){
+        int firstLargest = list.get(0);
+        int secondLargest = Integer.MAX_VALUE;
+
+        for(int i=1;i<list.size();i++){
+            if(list.get(i) > firstLargest){
+                secondLargest = firstLargest;
+                firstLargest = list.get(i);
             }
-            else if(currVal > seconLargestElement)
-            {
-                seconLargestElement = currVal;
+
+            else if(list.get(i) > secondLargest){
+                secondLargest = list.get(i);
             }
         }
 
-        return  seconLargestElement;
+        System.out.printf("Second Largest:%d\n",secondLargest);
+        return secondLargest;
     }
 
-    public static boolean isSorted()
-    {
+    public static Boolean checkSortedArray(List<Integer> list){
+
         for(int i=1;i<list.size();i++){
             if(list.get(i-1) > list.get(i))
-                return  false;
+                return false;
         }
 
         return true;
     }
+    
+    public static Pair countEvenOrOdd(List<Integer> list){
+        Pair pair = new Pair(0, 0);
 
-    public static Count countEvenOdd()
-    {
-        Count count = new Count(0, 0);
-
-        for(var ele : list){
-            if(ele % 2 == 0)
-                count.even++;
-            else 
-                count.odd++;
+        for(var val : list){
+            if(val %2 == 0)
+                pair.first++;
+            else
+                pair.second++;
         }
 
-        return count;
+        System.out.printf("Even Count:%d Odd Count:%d\n",pair.first,pair.second);
+        return pair;
     }
 
-    public static void reverseArr()
-    {
-        int startIndx = 0;
-        int endIndx = list.size()-1;
+    public static void display(List<Integer> list){
 
-        while(startIndx < endIndx){
-
-            int temp = list.get(startIndx);
-            list.set(startIndx, list.get(endIndx));
-            list.set(endIndx,temp);
-
-            startIndx++;
-            endIndx--;
-        }
-
-        return;
-    }
-
-    public static void display()
-    {
-        System.out.println();
-        System.out.printf("Arr:\t");
-
+        System.out.print("values:");
         for(var val : list){
             System.out.printf("%d\t",val);
         }
-
         System.out.println();
     }
 
-    public static boolean isPlamindrome()
-    {
-        int startIndx = 0;
-        int lastIndx = list.size()-1;
+    public static void reverseArray(List<Integer> list){
 
-        while(startIndx < lastIndx)
-        {
-            if(list.get(startIndx)!=list.get(lastIndx))
-            {
+        int i = 0;
+        int j = list.size()-1;
+
+        while(i<j){
+            int val = list.get(i);
+            list.set(i,list.get(j));
+            list.set(j,val);
+
+            i++;
+            j--;
+        }
+
+    }
+
+    public static boolean isPlamindrome(List<Integer> list){
+        int i = 0;
+        int j = list.size()-1;
+
+        while(i<j){
+            
+            if(list.get(i) != list.get(j))
                 return false;
-            }
 
-            startIndx++;
-            lastIndx--;
+            i++;
+            j--;
         }
 
         return true;
     }
 
-    public static int findMissingNumber()
-    {
-        int n = list.size();
+    public static void countFrequency(List<Integer> list){
+        Map<Integer,Integer> map = new HashMap<>();
 
-        int sum = 0;
         for(var val : list){
-            sum += val;
+            if(map.containsKey(val))
+                map.replace(val,map.get(val)+1);
+            else    
+                map.put(val, 1);
         }
 
-        return ((n * n -1)/2) - sum;
+        System.out.print("Frequency values:\t");
+        for(var entry : map.entrySet()){
+            System.out.printf("%d %d\t",entry.getKey(),entry.getValue());
+        }
+        System.out.println();
+    }
+
+    public static int findMissingNumber(List<Integer> list){
+        int sum = 0;
+
+
+        for(int i =0;i<list.size();i++){
+            sum += list.get(i);
+        }
+
+        return  (((list.size()) * (list.size() + 1)) / 2) - sum;
+    }
+
+    public static void removeDuplicate(List<Integer> list){
+
+        list.sort((Integer val1,Integer val2) -> val1 - val2);
+
+        
+        int lastvalidIndex = 0;
+        int i = lastvalidIndex + 1;
+
+        while(i<list.size()){
+            if(list.get(i) != list.get(lastvalidIndex))
+            {
+                list.set(lastvalidIndex+1,list.get(i));
+                lastvalidIndex++;
+            }
+            i++;
+        }
+
+        System.out.print("values:");
+        for(i = 0;i<=lastvalidIndex;i++){
+            System.out.printf("%d\t",list.get(i));
+        }
+        System.out.println();
 
     }
-    
-    //Remove Duplicates from the sorted Array..
 
+    public static void moveZerosToEnd(List<Integer> list){
 
-    //Move All the Zeros to the end..
-    public static void main(String[] args) {
+        int j = 0;
+        for(int i=0;i<list.size();i++){
+            if(list.get(i)!=0){
+                int temp = list.get(i);
+                list.set(i,list.get(j));
+                list.set(j,temp);
+                j++;
+            }
+        }
+
+        display(list);
+    }
+
+    public static void main(String[] args){
         
-        System.out.printf("Maxvalue:%d\n",findLargestElement());
-        System.out.printf("SecondLargestValue:%d\n",findSecondLargest());
-        System.out.printf("Incresing Order:%b\n",isSorted());
+        List<Integer> list =  new ArrayList<>(List.of(1,2,3,4,5));
+        
+        findLargestAndSmallest(list);
+        findSecondLargest(list);
 
-        Count countEO = countEvenOdd();
-        System.out.printf("Even count:%d\t Odd count:%d",countEO.even,countEO.odd);
+        countEvenOrOdd(list);
+        System.out.printf("Is Sorted:%b\n",checkSortedArray(list));
 
-        reverseArr();
-        display();
+        reverseArray(list);
+        display(list);
+
+        System.out.printf("Is palimdrome:%b\n",isPlamindrome(new ArrayList<>(List.of(1,1,1,1))));
+
+        countFrequency(list);
+
+        System.out.printf("Missing Number:%d\n",findMissingNumber(list));
+
+        removeDuplicate(new ArrayList<>(List.of(1,1,1,1,2,3)));
+
+        moveZerosToEnd(list);
+        return;
     }
 }
