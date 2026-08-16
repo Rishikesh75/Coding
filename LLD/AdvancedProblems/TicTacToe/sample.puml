@@ -1,86 +1,88 @@
 @startuml
 
-'======================
-' ENUM
-'======================
-enum Symbol {
-    PLUS
-    MINUS
-    MULTIPLY
+' =====================
+' Classes
+' =====================
+class Board
+{
+-cells : Cell[][]
+
++placeSymbol()
++isBoardFull()
++reset()
 }
 
-'======================
-' INTERFACE
-'======================
-interface IUser {
-    +login(username: String, password: String): boolean
-    +logout(): void
+class Player{
+-name : String
+-symbol : Symbol
+
++makeMove()
 }
 
-'======================
-' ABSTRACT CLASS
-'======================
-abstract class Person {
-    -id: int
-    #name: String
-    +age: int
+class Game
+{
+-board : Board
+-players : Player[2]
+-currentPlayer : Player
+-result : Result
 
-    +getDetails(): String
-    +setName(name: String): void
++start()
++playTurn()
++switchPlayer()
++isGameOver()
++restart()
 }
 
-'======================
-' CLASS WITH MEMBERS
-'======================
-class User {
-    ' Fields / Attributes
-    -userId: int
-    +username: String
-    #email: String
-    {static} userCount: int
-
-    ' Constructor
-    +User(username: String, email: String)
-
-
-    ' Methods
-    +login(): boolean
-    +logout(): void
-    -validatePassword(): boolean
-    {static} +getUserCount(): int
+class Result
+{
+-winner : Player
+-state : ResultState
 }
 
-'======================
-' ANOTHER CLASS
-'======================
-class Order {
-    -orderId: int
-    +amount: double
+class Cell
+{
+-row : int
+-column : int
+- symbol : Symbol
+}
+' ======================
+' Interfaces
+' ======================
 
-    +placeOrder(): void
-    +cancelOrder(): void
+
+
+' ======================
+' Enums
+' ======================
+enum Symbol
+{
+X
+O
+EMPTY
 }
 
-'======================
-' RELATIONSHIPS
-'======================
+enum ResultState
+{
+WIN
+DRAW
+IN_PROGRESS
+}
 
-' Inheritance (User extends Person)
-User --|> Person
 
-' Interface implementation
-User ..|> IUser
 
-' Association
-User --> Order
+' ======================
+' Relationships
+' ======================
+Game --> Board
+Game --> Player
+Game --> Result
 
-' Aggregation (weak relationship)
-User o-- Order
+Cell --> Symbol
 
-' Composition (strong relationship)
-Order *-- "1..*" Item
+Result --> ResultState
+Result --> Player
 
-' Dependency
-User ..> Symbol
+Board --> Cell
 
+Player --> Symbol
 @enduml
