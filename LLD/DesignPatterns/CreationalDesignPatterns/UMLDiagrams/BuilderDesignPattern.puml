@@ -1,26 +1,18 @@
-@startuml
-
-
-class Product
-{
-    - id : Integer
+class Product {
+    - id : int
     - name : String
-
-    - Product(builder : Builder)
+    - price : int
 }
 
-
-class "Product.Builder" as Builder
-{
-    - id : Integer
+class "Product.Builder" as Builder <<static>> {
+    - id : int
     - name : String
+    - price : int
 
-    + setId(id : Integer) : Builder
-    + setName(name : String) : Builder
-    + Build() : Product
+    + id(id : int) : Builder
+    + name(name : String) : Builder
+    + price(price : int) : Builder
+    + build() : Product
 }
 
 Product +-- Builder
-Builder --> Product
-
-@enduml

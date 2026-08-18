@@ -1,0 +1,43 @@
+@startuml
+
+
+interface IObserver
+{
+  + UpdateState(state : State)
+}
+
+interface ISubject
+{
+  + addObserver(observer: IObserver)
+  + removeObserver(observer : IObserver)
+  + notifyAll();
+}
+
+class Observer1
+{
+  + UpdateState(state : State)
+}
+
+class Observer2
+{
+  + UpdateState(state : State)
+}
+
+class Subject
+{
+  - observers : List<IObserver>
+  
+  + addObserver(observer: IObserver)
+  + removeObserver(observer : IObserver)
+  + notifyAll();
+  
+}
+
+Observer1 --|> IObserver
+Observer2 --|> IObserver
+Subject --|> ISubject
+
+
+
+
+@enduml

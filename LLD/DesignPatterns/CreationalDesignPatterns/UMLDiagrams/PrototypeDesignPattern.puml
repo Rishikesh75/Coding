@@ -1,11 +1,15 @@
 @startuml
 
+interface Prototype
+{
+ + clone() : Object
+}
+
 class Product
 {
-    - id : Integer
-    - name : String
 
-    + clone() : Object
 }
+
+Product --|> Prototype
 
 @enduml

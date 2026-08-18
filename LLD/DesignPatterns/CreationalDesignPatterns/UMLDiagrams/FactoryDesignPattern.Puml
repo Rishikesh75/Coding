@@ -1,25 +1,40 @@
 @startuml
 
-' Interfaces
+
 interface IProduct
-
-interface IFactory {
-    + createProduct() : IProduct
+{
+  
 }
 
-' Concrete Product
-class Product
 
-' Concrete Factory
-class Factory {
-   + createProduct() : IProduct
+interface IFactory
+{
+  + createNewProduct() : IProduct
 }
 
-' Relationships
-Product ..|> IProduct
-Factory ..|> IFactory
+class FactoryA
+{
+  + createNewProduct() : ProductA
+}
 
-' Factory creates Product
-Factory --> IProduct
+class ProductA
+{
+
+}
+
+class Client
+{
+
+}
+
+
+ProductA --|> IProduct
+FactoryA --|> IFactory
+
+IFactory --> IProduct : Uses
+
+FactoryA --> ProductA : Uses
+
+Client --> FactoryA : has
 
 @enduml

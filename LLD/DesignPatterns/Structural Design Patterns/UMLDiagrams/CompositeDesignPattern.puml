@@ -1,25 +1,24 @@
 @startuml
 
-interface Component {
-    + showDetails()
+interface IItem {
+    + operation() : void
 }
 
-class File {
-    - name : String
-    + showDetails()
+class LeafItem {
+    + operation() : void
 }
 
-class Folder {
-    - name : String
-    - children : List<Component>
-
-    + add(c : Component)
-    + remove(c : Component)
-    + showDetails()
+class CompositeItem {
+    - children : List<IItem>
+    + add(item : IItem) : void
+    + remove(item : IItem) : void
+    + operation() : void
 }
 
-Component <|.. File
-Component <|.. Folder
-Folder --> Component : contains
+IItem <|.. LeafItem
+IItem <|.. CompositeItem
+
+' 
+CompositeItem "1" o-- "0..*" IItem : contains //Aggregation relationship 
 
 @enduml

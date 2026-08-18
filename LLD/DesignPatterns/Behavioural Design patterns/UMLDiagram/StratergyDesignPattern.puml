@@ -1,33 +1,54 @@
 @startuml
 
-'Interfaces
-interface IPaymentMode
+interface IStratergy
 {
-    + pay() : void
+  + performAction()
+}
+
+class Stratergy1 
+{
+  + performAction()
+}
+
+class Stratergy2
+{
+  + performAction()
+}
+
+class Stratergy3
+{
+ + performAction()
+}
+
+Stratergy1 --|> IStratergy
+
+Stratergy2 --|> IStratergy
+
+Stratergy3 --|> IStratergy
+
+Context --> IStratergy : has
+
+Client --> Stratergy1 : uses
+Client --> Stratergy2 : uses
+Client --> Stratergy3 : uses
+Client --> Context : has
+class Context
+{
+  - stratergy : IStratergy 
+  
+  + Client(IStratergy stratergy)
+  + setStratergy(IStratergy stratergy): void
+  + performAction()
+}
+
+class Client
+{
+  - context : Context
+  
+  
 }
 
 
-'Classes
-class UPIPaymentMode
-{
-    + pay() : void
-}
 
-class CreaditCardPaymentMode
-{
-    + pay() : void
-}
-
-class User
-{
-    - pay : IPaymentMode
-
-    User(paymnetMode : IPaymentMode)
-}
-
-'Relations
-UPIPaymentMode ..|> IPaymentMode
-CreaditCardPaymentMode ..|> IPaymentMode
-User --|> IPaymentMode
 
 @enduml

@@ -1,0 +1,19 @@
+@startuml
+
+
+interface ITarget{
+
+}
+
+class Target{
+ - source : Source
+
+}
+
+class Source{
+
+}
+
+ITarget <|-- Target
+Target --> Source
+@enduml

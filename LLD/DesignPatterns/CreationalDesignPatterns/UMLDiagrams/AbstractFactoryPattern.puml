@@ -1,0 +1,63 @@
+@startuml
+
+interface IProductA{
+
+}
+
+interface IProductB{
+
+}
+
+class ProductA1{
+
+}
+
+class ProductA2{
+
+}
+
+class ProductB1{
+
+}
+
+class ProductB2{
+
+}
+
+interface IFactory
+{
+ + createProductA() : IProductA
+ + createProductB() : IProductB
+}
+
+class Factory1
+{
+  + createProductA() : ProductA1
+  + createProductB() : ProductB1
+}
+
+class Factory2
+{
+   + createProductA() : ProductA2
+   + createProductB() : ProductB2
+}
+
+ProductA1 --|> IProductA
+ProductA2 --|> IProductA
+
+ProductB1 --|> IProductB
+ProductB2 --|> IProductB
+
+Factory1 --|> IFactory
+Factory2 --|> IFactory
+
+Factory1 --> ProductA1
+Factory1 --> ProductB1
+
+Factory2 --> ProductA2
+Factory2 --> ProductB2
+
+IFactory --> IProductA
+IFactory --> IProductB
+
+@enduml
