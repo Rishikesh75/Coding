@@ -1,0 +1,43 @@
+@startuml
+
+interface ICommand
+{
+  + execute()
+}
+
+interface IDevice
+{
+  + cmd1();
+}
+
+
+class Device1Cmd1
+{
+  - device : IDevice
+  
+  + Device1Cmd1(device1:Device1)
+  + execute()
+}
+
+class Device1
+{
+  + cmd1;
+}
+class Remote
+{
+  private ICommand command;
+  
+  public void setCommand(ICommand command);
+
+}
+
+
+Device1Cmd1 --|> ICommand
+Device1 --|> IDevice
+
+Remote --> ICommand : has
+
+Device1Cmd1 --> Device1 : has
+
+
+@enduml

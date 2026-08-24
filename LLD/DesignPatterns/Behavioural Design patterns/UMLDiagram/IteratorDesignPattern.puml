@@ -1,0 +1,42 @@
+@startuml
+
+
+interface IIterator<T>
+{
+ + hasNext() : boolean
+ + next() : T 
+}
+
+
+interface IAggregator<T>
+{
+  + createIterator() : Iterator<T>
+}
+
+class SampleIterator<T>
+{
+    currIndex : int
+    List<T> list
+    
+    + SampleIterator(list:List<T>)
+    + hasNext() : boolean
+    + next() : T
+}
+
+
+class SampleAggregrator<T>
+{
+    - List<T> list;
+    
+    + SampleAggregrator(list : List<T>)
+    
+    + createIterator() : Iterator<T>
+    
+}
+
+SampleIterator --|> IIterator
+SampleAggregrator --|> IAggregator
+
+IAggregator --> IIterator : uses
+SampleAggregrator --> SampleIterator : uses
+@enduml

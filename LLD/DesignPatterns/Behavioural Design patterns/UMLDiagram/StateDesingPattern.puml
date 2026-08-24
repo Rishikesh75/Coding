@@ -1,0 +1,35 @@
+@startuml
+
+
+interface IState
+{
+
+  + method();
+}
+
+class State1 
+{
+  + method();
+}
+
+class State2
+{
+  + method();
+}
+
+class Device
+{
+  - state : IState
+  
+  + setState(State : IState)
+  + execute()
+}
+
+State1 --|> IState
+State2 --|> IState
+
+Device --> IState : has
+
+
+
+@enduml
