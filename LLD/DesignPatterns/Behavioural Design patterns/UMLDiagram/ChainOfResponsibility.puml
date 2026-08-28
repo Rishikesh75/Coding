@@ -1,0 +1,27 @@
+@startuml
+
+
+abstract class Approver
+{
+  
+  # nextApprover : Approver;
+  + void setNextApprover(Approver approver)
+  + {abstract} void approver()
+}
+
+
+class Approver1
+{
+  + @Overide approver()
+}
+
+class Approver2
+{
+  + @Overide approver()
+}
+
+Approver1 --> Approver2 : uses
+Approver1 --|> Approver
+Approver2 --|> Approver
+
+@enduml

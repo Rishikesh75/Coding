@@ -1,0 +1,20 @@
+@startuml
+
+class TextEditor
+{
+    text : String
+    
+    + void setText(String text);
+    + Memento save();
+    + restore(memento : Memento);
+}
+
+class Memeto
+{
+  - final String text;
+  + Memeto(text : String);
+  + String getText();
+}
+
+TextEditor --> Memeto : uses
+@enduml

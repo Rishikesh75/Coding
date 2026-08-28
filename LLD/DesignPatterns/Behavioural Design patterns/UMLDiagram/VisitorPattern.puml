@@ -1,0 +1,42 @@
+@startuml
+
+interface IPaitnent
+{
+   + visit(Visitor :IVisitor) : void
+}
+
+interface IVisitor
+{
+  + visit(paitent : Paitent1) : void
+  + visit(paitent : Paitent2) : void
+}
+
+class Paitent1 
+{
+  + {@Overide} visit(Visitor : IVisitor) : void
+  
+}
+
+class Paitent2 
+{
+  + {@Overide} visit(Visitor : IVisitor) : void
+  
+}
+
+class Visitor{
+  
+}
+
+Visitor --|> IVisitor
+
+Paitent1 --|> IPaitnent
+Paitent2 --|> IPaitnent
+
+IVisitor --> Paitent1 : uses
+IVisitor --> Paitent2 : uses
+
+IPaitnent --> IVisitor : uses
+
+
+
+@enduml

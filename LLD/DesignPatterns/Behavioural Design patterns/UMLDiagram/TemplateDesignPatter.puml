@@ -1,0 +1,34 @@
+@startuml
+
+
+class Template
+{
+  + void cook();
+  + void cleanVegitables();
+  + void boilWater();
+  + void putMaggie();
+}
+
+class Sample1 
+{
+  +  void cook()
+  + @overide void cleanVegitables();
+  + @overide void boilWater();
+  + @overide void putMaggie();
+}
+
+class Sample2
+{
+  +  void cook()
+  + @overide void cleanVegitables();
+  + @overide void boilWater();
+  + @overide void putMaggie();  
+  
+}
+Sample1 --|> Template
+
+Sample2 --|> Template
+
+
+
+@enduml

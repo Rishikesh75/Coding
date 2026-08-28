@@ -1,0 +1,35 @@
+@startuml
+
+interface IMediator
+{
+  + register(bidder : Bidder)
+  + placeBid(bidder : Bidder,amount:int)
+}
+
+class AutionMediator
+{
+  +  bidders : List<Bidders>;
+  
+  + register(bidder : Bidder)
+  + placeBid(bidder,amount);
+}
+
+class Bidder
+{
+    + name : String
+    + mediator : IMediator;
+    
+    
+    + placeBid()
+}
+
+class ExtendedAutionMediator
+{
+     + placeBid(bidder,amount);
+}
+
+AutionMediator <|-- ExtendedAutionMediator
+IMediator <|-- AutionMediator
+AutionMediator --> Bidder
+
+@enduml
