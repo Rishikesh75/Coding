@@ -1,0 +1,66 @@
+name: Export Excalidraw diagrams
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Excalidraw exporter
+        run: npm install --global excalidraw-brute-export-cli@0.4.0
+
+      - name: Install Firefox for headless export
+        run: npx --yes playwright install --with-deps firefox
+
+      - name: Convert drawings to PNG
+        shell: bash
+        run: |
+          mapfile -d '' files < <(find . -type f -name '*.excalidraw' -not -path './.git/*' -not -path './output/*' -print0)
+          if ((${#files[@]} == 0)); then
+            echo "::error::No .excalidraw files were found."
+            exit 1
+          fi
+
+          mkdir -p output
+          find output -maxdepth 1 -type f -name '*.png' -delete
+
+          for file in "${files[@]}"; do
+            name="$(basename "${file%.excalidraw}")"
+            target="output/${name}.png"
+            if [[ -e "$target" ]]; then
+              echo "::error::Multiple Excalidraw files have the same name: ${name}.excalidraw"
+              exit 1
+            fi
+
+            excalidraw-brute-export-cli \
+              --input "$file" \
+              --background 1 \
+              --embed-scene 0 \
+              --dark-mode 0 \
+              --scale 1 \
+              --format png \
+              --output "$target"
+          done
+
+      - name: Commit generated images
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add output/
+          if ! git diff --cached --quiet; then
+            git commit -m "Update exported Excalidraw images"
+            git push
+          fi

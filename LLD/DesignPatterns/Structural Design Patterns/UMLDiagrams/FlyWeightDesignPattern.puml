@@ -1,0 +1,14 @@
+@startuml
+
+
+class ItemType{
+
+}
+
+class Item{
+    - itemType: ItemType
+}
+
+
+
+@enduml

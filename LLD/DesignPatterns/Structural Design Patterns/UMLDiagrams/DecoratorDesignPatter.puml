@@ -1,0 +1,30 @@
+@startuml
+
+interface IEntity
+{
+
+}
+
+class SimpleEntity
+{
+
+}
+
+abstract class DecoratorEntity
+{
+  + entity : IEntity
+}
+
+class DecoratorEntity1
+{
+  + entity : IEntity
+}
+
+IEntity <|-- SimpleEntity
+IEntity <|-- DecoratorEntity
+
+DecoratorEntity <|-- DecoratorEntity1
+
+
+
+@enduml

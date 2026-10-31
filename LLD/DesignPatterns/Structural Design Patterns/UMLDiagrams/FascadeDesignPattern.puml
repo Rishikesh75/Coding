@@ -1,0 +1,45 @@
+@startuml
+
+
+interface ITarget
+{
+   + void targetSample1();
+   + void targetSample2();
+   + void targetSample3();
+}
+
+class Target 
+{
+  + sample1 : Sample1;
+  + sample2 : Sample2;
+  + sample3 : Sample3;
+   + void targetSample1();
+   + void targetSample2();
+   + void targetSample3();
+}
+
+class Sample1
+{
+  + void method1()
+  
+}
+
+
+class Sample2
+{
+  + void method2();
+
+}
+
+class Sample3
+{
+  + void method3();
+
+}
+
+
+Target --|> ITarget
+Target --> Sample1
+Target --> Sample2
+Target --> Sample3
+@enduml

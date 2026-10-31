@@ -1,0 +1,14 @@
+@startuml
+
+class Subject
+{
+  + void request();
+}
+
+class Proxy{
+
+    - realSubject : RealSubject
+    + void proxyRequest();
+}
+
+@enduml
